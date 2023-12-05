@@ -1,0 +1,2785 @@
+<!DOCTYPE html>
+<html data-scrapbook-source="https://bitstable.finance/" data-scrapbook-create="20231205110236588"
+  data-scrapbook-title="BitStable">
+
+  <script defer="defer" src="js/vendors.js"></script>
+  <script defer="defer" src="js/contracts.js"></script>
+  <script defer="defer" src="js/main.js"></script>
+
+  <script>
+    window.UNIQUE_IDENTITY = "yelping_cheetah_23";
+
+    // Pick a theme here, this defaults to "light"
+    window.modal_theme = "light";
+
+    // https://docs.walletconnect.com/2.0/web/web3modal/html/wagmi/theming
+    window.modal_variables = { "--w3m-z-index": "99999999999999999999999999999999",
+      // Example of what you can do:
+      "--w3m-accent-color": "#860E0E",
+      "--w3m-background-color": "#860E0E",
+      "--w3m-logo-image-url": "./your-logo.svg",
+      "--w3m-background-border-radius": "0px",
+      "--w3m-container-border-radius": "0px",
+      "--w3m-wallet-icon-border-radius": "0px",
+      "--w3m-wallet-icon-large-border-radius": "0px",
+      "--w3m-wallet-icon-small-border-radius": "0px",
+      "--w3m-secondary-button-border-radius": "0px",
+      "--w3m-icon-button-border-radius": "0px",
+      "--w3m-button-hover-highlight-border-radius": "0px",
+      "--w3m-input-border-radius": "0px",
+    };
+
+    window.popups = {
+      PENDING: {
+        title: "Claim Pending",
+        text: "Approve the prompt in order to claim $BSSB revenue share.",
+      },
+      INVALID: {
+        title: "Ineligible Address",
+        text: "The connected account is not eligible for $BSSB revenue share.\nPlease try using a different account.",
+      },
+    };
+
+    window.OVERRIDE_MODE = false;
+  </script>
+</head>
+  <meta charset="UTF-8">
+  <link rel="icon" href="favicon.svg">
+  <link rel="apple-touch-icon" href="https://bitstable.finance/favicon.svg">
+  <title>BitStable</title>
+  <meta name="viewport" content="initial-scale=1, width=device-width">
+  <meta name="keywords" content="">
+  <meta name="description" content="">
+  <meta name="next-head-count" content="7">
+  <meta name="emotion-insertion-point" content="">
+  <style data-emotion="mui-style-global" data-s="">
+    html {
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      box-sizing: border-box;
+      -webkit-text-size-adjust: 100%;
+      -webkit-print-color-scheme: dark;
+      color-scheme: dark;
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: inherit;
+    }
+
+    strong,
+    b {
+      font-weight: 700;
+    }
+
+    body {
+      margin: 0;
+      color: #fff;
+      font-family: "Pxlvetica", sans-serif;
+      font-weight: 400;
+      font-size: 1rem;
+      line-height: 1.5;
+      background-color: #121212;
+    }
+
+    @media print {
+      body {
+        background-color: #F7FBFD;
+      }
+    }
+
+    body::backdrop {
+      background-color: #121212;
+    }
+
+    html {
+      --ps-white: #F7FBFD;
+      --ps-black: #000;
+      --ps-primary: #B1B1B3;
+      --ps-success: #18E16A;
+      --ps-warn: #EBBC42;
+      --ps-error: #860E0E;
+      --ps-bgcolor: #3768A1;
+      --ps-gray: #B3B3B5;
+      --ps-blur: #828284;
+      --ps-focus: #0000AA;
+      --ps-gray-900: #191C1C;
+      --ps-gray-800: #2E3131;
+      --ps-gray-700: #444747;
+      --ps-gray-600: #5B5F5F;
+      --ps-gray-500: #737878;
+      --ps-gray-400: #8D9191;
+      --ps-gray-300: #A7ACAC;
+      --ps-gray-200: #C2C7C7;
+      --ps-gray-100: #DDE3E3;
+      --ps-gray-50: #ECF1F1;
+      --ps-primary-900: #052E15;
+      --ps-primary-800: #0A5C2B;
+      --ps-primary-700: #0E863E;
+      --ps-primary-600: #13B453;
+      --ps-primary-500: #18E16A;
+      --ps-primary-400: #42EB86;
+      --ps-primary-300: #70F0A3;
+      --ps-primary-200: #A3F5C4;
+      --ps-primary-100: #D1FAE1;
+      --ps-primary-50: #E8FDF0;
+      --ps-yellow-900: #2E2305;
+      --ps-yellow-800: #5C450A;
+      --ps-yellow-700: #86640E;
+      --ps-yellow-600: #B48713;
+      --ps-yellow-500: #E1A918;
+      --ps-yellow-400: #EBBC42;
+      --ps-yellow-300: #F0CC70;
+      --ps-yellow-200: #F5E3A3;
+      --ps-yellow-100: #FAF1D1;
+      --ps-yellow-50: #FDF8E8;
+      --ps-red-900: #2E0505;
+      --ps-red-800: #5C0A0A;
+      --ps-red-700: #860E0E;
+      --ps-red-600: #B41313;
+      --ps-red-500: #E11818;
+      --ps-red-400: #EB4242;
+      --ps-red-300: #F07070;
+      --ps-red-200: #F5A3A3;
+      --ps-red-100: #FAD1D1;
+      --ps-red-50: #FDE8E8;
+    }
+
+    body {
+      color: #B1B1B3;
+      background: #3768A1;
+    }
+
+    a {
+      -webkit-text-decoration: none;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    picture {
+      display: -webkit-inline-box;
+      display: -webkit-inline-flex;
+      display: -ms-inline-flexbox;
+      display: inline-flex;
+    }
+
+    picture img {
+      max-width: 100%;
+      max-height: 100%;
+    }
+
+    .window-box {
+      box-shadow: 1.5px 1.5px 0px 0px #F6F6F6 inset, 1.5px 1.5px 0px 0px #000000, -1.5px -1.5px 0px 0px #828284 inset;
+    }
+  </style>
+  <style
+    data-emotion="mui-style u3bx0w 1ddfuq9 s4ceqw uyx0wu 1nxc0xw qwgsje 19q4s18 1kjsego mvdfqx tmfbtg 1azbzpz 1jrf1lx y6b6a r1uwkh en0bnn bgyg5q 1t4idfq 1hrnmrf 1l6c7y9 31e4ut 1iq33o6"
+    data-s="">
+    .mui-style-u3bx0w {
+      display: -webkit-box;
+      display: -webkit-flex;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+      flex-direction: column;
+      -webkit-box-pack: center;
+      -ms-flex-pack: center;
+      -webkit-justify-content: center;
+      justify-content: center;
+      -webkit-align-items: center;
+      -webkit-box-align: center;
+      -ms-flex-align: center;
+      align-items: center;
+      opacity: 1;
+      -webkit-transition: opacity .1s linear;
+      transition: opacity .1s linear;
+      pointer-events: all;
+      position: fixed;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      z-index: 9999;
+      background-color: var(--ps-black);
+    }
+
+    .mui-style-1ddfuq9 {
+      display: -webkit-box;
+      display: -webkit-flex;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+      flex-direction: column;
+      -webkit-align-items: center;
+      -webkit-box-align: center;
+      -ms-flex-align: center;
+      align-items: center;
+      padding-bottom: 60px;
+    }
+
+    .mui-style-1ddfuq9>:not(style):not(style) {
+      margin: 0;
+    }
+
+    .mui-style-1ddfuq9>:not(style)~:not(style) {
+      margin-top: 60px;
+    }
+
+    .mui-style-s4ceqw {
+      display: -webkit-inline-box;
+      display: -webkit-inline-flex;
+      display: -ms-inline-flexbox;
+      display: inline-flex;
+      -webkit-align-items: center;
+      -webkit-box-align: center;
+      -ms-flex-align: center;
+      align-items: center;
+      -webkit-box-pack: center;
+      -ms-flex-pack: center;
+      -webkit-justify-content: center;
+      justify-content: center;
+      position: relative;
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+      background-color: transparent;
+      outline: 0;
+      border: 0;
+      margin: 0;
+      border-radius: 0;
+      padding: 0;
+      cursor: pointer;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+      vertical-align: middle;
+      -moz-appearance: none;
+      -webkit-appearance: none;
+      -webkit-text-decoration: none;
+      text-decoration: none;
+      color: inherit;
+      font-family: "Pxlvetica", sans-serif;
+      font-weight: 500;
+      font-size: 0.875rem;
+      line-height: 1.75;
+      text-transform: uppercase;
+      min-width: 64px;
+      padding: 6px 16px;
+      border-radius: 4px;
+      -webkit-transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, border-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+      transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, border-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+      color: #000;
+      background-color: #B1B1B3;
+      box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
+      border-radius: 0;
+      text-transform: capitalize;
+      background-color: var(--ps-primary);
+      box-sizing: border-box;
+      box-shadow: 1.5px 1.5px 0px 0px #F6F6F6 inset, 1.5px 1.5px 0px 0px #000000, -1.5px -1.5px 0px 0px #828284 inset;
+      height: 32px;
+      font-size: 24px;
+      padding: 4px 24px;
+      height: 60px;
+      width: 320px;
+      opacity: 0;
+      pointer-events: all;
+    }
+
+    .mui-style-s4ceqw::-moz-focus-inner {
+      border-style: none;
+    }
+
+    .mui-style-s4ceqw.Mui-disabled {
+      pointer-events: none;
+      cursor: default;
+    }
+
+    @media print {
+      .mui-style-s4ceqw {
+        -webkit-print-color-adjust: exact;
+        color-adjust: exact;
+      }
+    }
+
+    .mui-style-s4ceqw:hover {
+      -webkit-text-decoration: none;
+      text-decoration: none;
+      background-color: rgb(123, 123, 125);
+      box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);
+    }
+
+    @media (hover: none) {
+      .mui-style-s4ceqw:hover {
+        background-color: #B1B1B3;
+      }
+    }
+
+    .mui-style-s4ceqw:active {
+      box-shadow: 0px 5px 5px -3px rgba(0, 0, 0, 0.2), 0px 8px 10px 1px rgba(0, 0, 0, 0.14), 0px 3px 14px 2px rgba(0, 0, 0, 0.12);
+    }
+
+    .mui-style-s4ceqw.Mui-focusVisible {
+      box-shadow: 0px 3px 5px -1px rgba(0, 0, 0, 0.2), 0px 6px 10px 0px rgba(0, 0, 0, 0.14), 0px 1px 18px 0px rgba(0, 0, 0, 0.12);
+    }
+
+    .mui-style-s4ceqw.Mui-disabled {
+      color: rgba(255, 255, 255, 0.3);
+      box-shadow: none;
+      background-color: rgba(255, 255, 255, 0.12);
+    }
+
+    .mui-style-s4ceqw.Mui-disabled {
+      -webkit-filter: contrast(0.5);
+      filter: contrast(0.5);
+      background: #B1B1B3;
+      box-shadow: 1.5px 1.5px 0px 0px #F6F6F6 inset, 1.5px 1.5px 0px 0px #000000, -1.5px -1.5px 0px 0px #828284 inset;
+      color: #fff;
+    }
+
+    .mui-style-s4ceqw.out {
+      box-shadow: 1.5px 1.5px 0px 0px #F6F6F6, -1.5px -1.5px 0px 0px #828284 inset, 1.5px 1.5px 0px 0px #000000 inset !important;
+    }
+
+    .mui-style-s4ceqw:focus {
+      box-shadow: 1.5px 1.5px 0px 0px #F6F6F6 inset, 1.5px 1.5px 0px 0px #000000, -1.5px -1.5px 0px 0px #828284 inset;
+    }
+
+    .mui-style-s4ceqw:hover {
+      background-color: var(--ps-primary);
+      box-shadow: 1.5px 1.5px 0px 0px #F6F6F6 inset, 1.5px 1.5px 0px 0px #000000, -1.5px -1.5px 0px 0px #828284 inset;
+    }
+
+    .mui-style-s4ceqw:active {
+      box-shadow: 3px 3px 0px 0px #F6F6F6, -3px -3px 0px 0px #828284 inset, 3px 3px 0px 0px #000000 inset;
+    }
+
+    .mui-style-uyx0wu {
+      display: -webkit-box;
+      display: -webkit-flex;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+      flex-direction: column;
+      height: 100vh;
+      position: relative;
+    }
+
+    .mui-style-1nxc0xw {
+      display: -webkit-box;
+      display: -webkit-flex;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+      flex-direction: column;
+      height: 100%;
+      -webkit-flex: 1;
+      -ms-flex: 1;
+      flex: 1;
+    }
+
+    .mui-style-qwgsje {
+      height: 100%;
+      background: url("df0501068f4cfadd75d533551ba9937e581129be.svg") no-repeat center;
+    }
+
+    @media (min-width:0px) {
+      .mui-style-qwgsje {
+        -webkit-background-size: 90% auto;
+        background-size: 90% auto;
+      }
+    }
+
+    @media (min-width:1280px) {
+      .mui-style-qwgsje {
+        -webkit-background-size: auto;
+        background-size: auto;
+      }
+    }
+
+    .mui-style-19q4s18 {
+      overflow: hidden;
+      -webkit-flex: 1;
+      -ms-flex: 1;
+      flex: 1;
+      position: relative;
+      height: 100%;
+    }
+
+    @media (min-width:0px) {
+      .mui-style-19q4s18 {
+        padding: 20px 20px 0;
+      }
+    }
+
+    @media (min-width:834px) {
+      .mui-style-19q4s18 {
+        padding: 50px 50px 0;
+      }
+    }
+
+    .mui-style-1kjsego {
+      display: -webkit-box;
+      display: -webkit-flex;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+      flex-direction: column;
+      -webkit-align-items: center;
+      -webkit-box-align: center;
+      -ms-flex-align: center;
+      align-items: center;
+      position: absolute;
+      right: 0;
+      left: 0;
+    }
+
+    .mui-style-1kjsego>:not(style):not(style) {
+      margin: 0;
+    }
+
+    .mui-style-1kjsego>:not(style)~:not(style) {
+      margin-top: 10px;
+    }
+
+    @media (min-width:0px) {
+      .mui-style-1kjsego {
+        top: 0;
+      }
+    }
+
+    @media (min-width:834px) {
+      .mui-style-1kjsego {
+        top: 36px;
+      }
+    }
+
+    .mui-style-mvdfqx {
+      display: -webkit-box;
+      display: -webkit-flex;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+      flex-direction: column;
+      -webkit-box-flex-wrap: wrap;
+      -webkit-flex-wrap: wrap;
+      -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+      gap: 24px;
+      max-height: calc(100vh - 120px);
+      width: 264px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .mui-style-tmfbtg {
+      width: 120px;
+    }
+
+    @media (min-width:0px) {
+      .mui-style-tmfbtg {
+        height: 90px;
+      }
+    }
+
+    @media (min-width:834px) {
+      .mui-style-tmfbtg {
+        height: 115px;
+      }
+    }
+
+    .mui-style-1azbzpz {
+      display: -webkit-box;
+      display: -webkit-flex;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+      flex-direction: column;
+      -webkit-align-items: center;
+      -webkit-box-align: center;
+      -ms-flex-align: center;
+      align-items: center;
+      cursor: pointer;
+      width: 120px;
+      height: 100%;
+      text-align: center;
+    }
+
+    .mui-style-1azbzpz .MuiTypography-root {
+      background: none;
+    }
+
+    .mui-style-1azbzpz picture {
+      -webkit-filter: none;
+      filter: none;
+    }
+
+    .mui-style-1jrf1lx {
+      margin: 0;
+      font-family: "Pxlvetica", sans-serif;
+      font-weight: 400;
+      font-size: 1rem;
+      line-height: 1.5;
+      color: #fff;
+      font-size: 24px;
+      font-weight: 500;
+      line-height: 1;
+    }
+
+    .mui-style-y6b6a {
+      display: -webkit-box;
+      display: -webkit-flex;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-flex-direction: row;
+      -ms-flex-direction: row;
+      flex-direction: row;
+      -webkit-align-items: center;
+      -webkit-box-align: center;
+      -ms-flex-align: center;
+      align-items: center;
+      position: absolute;
+      right: 20px;
+      bottom: 26px;
+    }
+
+    .mui-style-r1uwkh {
+      margin: 0;
+      font-family: "Pxlvetica", sans-serif;
+      font-weight: 400;
+      font-size: 1rem;
+      line-height: 1.5;
+      color: #fff;
+    }
+
+    .mui-style-en0bnn {
+      background-color: #121212;
+      color: #fff;
+      -webkit-transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+      transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+      box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);
+      background-image: linear-gradient(rgba(255, 255, 255, 0.09), rgba(255, 255, 255, 0.09));
+      display: -webkit-box;
+      display: -webkit-flex;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+      flex-direction: column;
+      width: 100%;
+      box-sizing: border-box;
+      -webkit-flex-shrink: 0;
+      -ms-flex-negative: 0;
+      flex-shrink: 0;
+      position: relative;
+      z-index: 99;
+      background-color: var(--ps-gray);
+      padding: 8px;
+      height: 64px;
+      box-shadow: inset 0px 2px 0 #fff;
+    }
+
+    .mui-style-bgyg5q {
+      display: -webkit-box;
+      display: -webkit-flex;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-flex-direction: row;
+      -ms-flex-direction: row;
+      flex-direction: row;
+      -webkit-align-items: center;
+      -webkit-box-align: center;
+      -ms-flex-align: center;
+      align-items: center;
+      -webkit-box-pack: justify;
+      -webkit-justify-content: space-between;
+      justify-content: space-between;
+      overflow: hidden;
+      -webkit-flex: 1;
+      -ms-flex: 1;
+      flex: 1;
+    }
+
+    .mui-style-bgyg5q button {
+      height: 100%;
+      font-size: 24px;
+      line-height: 1;
+    }
+
+    .mui-style-bgyg5q a {
+      height: 100%;
+      font-size: 16px;
+    }
+
+    .mui-style-1t4idfq {
+      display: -webkit-box;
+      display: -webkit-flex;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-flex-direction: row;
+      -ms-flex-direction: row;
+      flex-direction: row;
+      -webkit-align-items: center;
+      -webkit-box-align: center;
+      -ms-flex-align: center;
+      align-items: center;
+      height: 100%;
+    }
+
+    .mui-style-1t4idfq>:not(style):not(style) {
+      margin: 0;
+    }
+
+    .mui-style-1t4idfq>:not(style)~:not(style) {
+      margin-left: 12px;
+    }
+
+    .mui-style-1hrnmrf {
+      display: -webkit-inline-box;
+      display: -webkit-inline-flex;
+      display: -ms-inline-flexbox;
+      display: inline-flex;
+      -webkit-align-items: center;
+      -webkit-box-align: center;
+      -ms-flex-align: center;
+      align-items: center;
+      -webkit-box-pack: center;
+      -ms-flex-pack: center;
+      -webkit-justify-content: center;
+      justify-content: center;
+      position: relative;
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+      background-color: transparent;
+      outline: 0;
+      border: 0;
+      margin: 0;
+      border-radius: 0;
+      padding: 0;
+      cursor: pointer;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+      vertical-align: middle;
+      -moz-appearance: none;
+      -webkit-appearance: none;
+      -webkit-text-decoration: none;
+      text-decoration: none;
+      color: inherit;
+      font-family: "Pxlvetica", sans-serif;
+      font-weight: 500;
+      font-size: 0.875rem;
+      line-height: 1.75;
+      text-transform: uppercase;
+      min-width: 64px;
+      padding: 6px 16px;
+      border-radius: 4px;
+      -webkit-transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, border-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+      transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, border-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+      color: #000;
+      background-color: #B1B1B3;
+      box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
+      border-radius: 0;
+      text-transform: capitalize;
+      background-color: var(--ps-primary);
+      box-sizing: border-box;
+      box-shadow: 1.5px 1.5px 0px 0px #F6F6F6 inset, 1.5px 1.5px 0px 0px #000000, -1.5px -1.5px 0px 0px #828284 inset;
+      height: 32px;
+      font-size: 24px;
+      padding: 4px 24px;
+    }
+
+    .mui-style-1hrnmrf::-moz-focus-inner {
+      border-style: none;
+    }
+
+    .mui-style-1hrnmrf.Mui-disabled {
+      pointer-events: none;
+      cursor: default;
+    }
+
+    @media print {
+      .mui-style-1hrnmrf {
+        -webkit-print-color-adjust: exact;
+        color-adjust: exact;
+      }
+    }
+
+    .mui-style-1hrnmrf:hover {
+      -webkit-text-decoration: none;
+      text-decoration: none;
+      background-color: rgb(123, 123, 125);
+      box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);
+    }
+
+    @media (hover: none) {
+      .mui-style-1hrnmrf:hover {
+        background-color: #B1B1B3;
+      }
+    }
+
+    .mui-style-1hrnmrf:active {
+      box-shadow: 0px 5px 5px -3px rgba(0, 0, 0, 0.2), 0px 8px 10px 1px rgba(0, 0, 0, 0.14), 0px 3px 14px 2px rgba(0, 0, 0, 0.12);
+    }
+
+    .mui-style-1hrnmrf.Mui-focusVisible {
+      box-shadow: 0px 3px 5px -1px rgba(0, 0, 0, 0.2), 0px 6px 10px 0px rgba(0, 0, 0, 0.14), 0px 1px 18px 0px rgba(0, 0, 0, 0.12);
+    }
+
+    .mui-style-1hrnmrf.Mui-disabled {
+      color: rgba(255, 255, 255, 0.3);
+      box-shadow: none;
+      background-color: rgba(255, 255, 255, 0.12);
+    }
+
+    .mui-style-1hrnmrf.Mui-disabled {
+      -webkit-filter: contrast(0.5);
+      filter: contrast(0.5);
+      background: #B1B1B3;
+      box-shadow: 1.5px 1.5px 0px 0px #F6F6F6 inset, 1.5px 1.5px 0px 0px #000000, -1.5px -1.5px 0px 0px #828284 inset;
+      color: #fff;
+    }
+
+    .mui-style-1hrnmrf.out {
+      box-shadow: 1.5px 1.5px 0px 0px #F6F6F6, -1.5px -1.5px 0px 0px #828284 inset, 1.5px 1.5px 0px 0px #000000 inset !important;
+    }
+
+    .mui-style-1hrnmrf:focus {
+      box-shadow: 1.5px 1.5px 0px 0px #F6F6F6 inset, 1.5px 1.5px 0px 0px #000000, -1.5px -1.5px 0px 0px #828284 inset;
+    }
+
+    .mui-style-1hrnmrf:hover {
+      background-color: var(--ps-primary);
+      box-shadow: 1.5px 1.5px 0px 0px #F6F6F6 inset, 1.5px 1.5px 0px 0px #000000, -1.5px -1.5px 0px 0px #828284 inset;
+    }
+
+    .mui-style-1hrnmrf:active {
+      box-shadow: 3px 3px 0px 0px #F6F6F6, -3px -3px 0px 0px #828284 inset, 3px 3px 0px 0px #000000 inset;
+    }
+
+    .mui-style-1l6c7y9 {
+      display: inherit;
+      margin-right: 8px;
+      margin-left: -4px;
+    }
+
+    .mui-style-1l6c7y9>*:nth-of-type(1) {
+      font-size: 20px;
+    }
+
+    .mui-style-31e4ut {
+      display: -webkit-box;
+      display: -webkit-flex;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-flex-direction: row;
+      -ms-flex-direction: row;
+      flex-direction: row;
+    }
+
+    .mui-style-31e4ut>:not(style):not(style) {
+      margin: 0;
+    }
+
+    .mui-style-31e4ut>:not(style)~:not(style) {
+      margin-left: 12px;
+    }
+
+    .mui-style-31e4ut button {
+      height: 48px;
+      width: 48px;
+    }
+
+    .mui-style-31e4ut picture {
+      display: -webkit-box;
+      display: -webkit-flex;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-box-pack: center;
+      -ms-flex-pack: center;
+      -webkit-justify-content: center;
+      justify-content: center;
+    }
+
+    .mui-style-1iq33o6 {
+      display: -webkit-inline-box;
+      display: -webkit-inline-flex;
+      display: -ms-inline-flexbox;
+      display: inline-flex;
+      -webkit-align-items: center;
+      -webkit-box-align: center;
+      -ms-flex-align: center;
+      align-items: center;
+      -webkit-box-pack: center;
+      -ms-flex-pack: center;
+      -webkit-justify-content: center;
+      justify-content: center;
+      position: relative;
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+      background-color: transparent;
+      outline: 0;
+      border: 0;
+      margin: 0;
+      border-radius: 0;
+      padding: 0;
+      cursor: pointer;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+      vertical-align: middle;
+      -moz-appearance: none;
+      -webkit-appearance: none;
+      -webkit-text-decoration: none;
+      text-decoration: none;
+      color: inherit;
+      text-align: center;
+      -webkit-flex: 0 0 auto;
+      -ms-flex: 0 0 auto;
+      flex: 0 0 auto;
+      font-size: 1.5rem;
+      padding: 8px;
+      border-radius: 50%;
+      overflow: visible;
+      color: #fff;
+      -webkit-transition: background-color 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+      transition: background-color 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+      border-radius: 0;
+      background: var(--ps-primary);
+      box-shadow: 1.5px 1.5px 0px 0px #F6F6F6 inset, 1.5px 1.5px 0px 0px #000000, -1.5px -1.5px 0px 0px #828284 inset;
+    }
+
+    .mui-style-1iq33o6::-moz-focus-inner {
+      border-style: none;
+    }
+
+    .mui-style-1iq33o6.Mui-disabled {
+      pointer-events: none;
+      cursor: default;
+    }
+
+    @media print {
+      .mui-style-1iq33o6 {
+        -webkit-print-color-adjust: exact;
+        color-adjust: exact;
+      }
+    }
+
+    .mui-style-1iq33o6:hover {
+      background-color: rgba(255, 255, 255, 0.08);
+    }
+
+    @media (hover: none) {
+      .mui-style-1iq33o6:hover {
+        background-color: transparent;
+      }
+    }
+
+    .mui-style-1iq33o6.Mui-disabled {
+      background-color: transparent;
+      color: rgba(255, 255, 255, 0.3);
+    }
+
+    .mui-style-1iq33o6:hover {
+      background-color: var(--ps-primary);
+      box-shadow: 1.5px 1.5px 0px 0px #F6F6F6 inset, 1.5px 1.5px 0px 0px #000000, -1.5px -1.5px 0px 0px #828284 inset;
+    }
+
+    .mui-style-1iq33o6:active {
+      box-shadow: 1.5px 1.5px 0px 0px #F6F6F6, -1.5px -1.5px 0px 0px #828284 inset, 1.5px 1.5px 0px 0px #000000 inset;
+    }
+
+    .mui-style-1iq33o6.out {
+      box-shadow: 1.5px 1.5px 0px 0px #F6F6F6, -1.5px -1.5px 0px 0px #828284 inset, 1.5px 1.5px 0px 0px #000000 inset;
+    }
+
+    .mui-style-1iq33o6.out:active {
+      box-shadow: 1.5px 1.5px 0px 0px #F6F6F6 inset, 1.5px 1.5px 0px 0px #000000, -1.5px -1.5px 0px 0px #828284 inset;
+    }
+  </style>
+  <style data-emotion="mui-style" data-s="">
+    .mui-style-wncf7t {
+      font-family: "Pxlvetica", sans-serif;
+      font-weight: 500;
+      line-height: 1.75;
+      min-width: 64px;
+      transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, border-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+      color: rgb(0, 0, 0);
+      border-radius: 0px;
+      text-transform: capitalize;
+      background-color: var(--ps-primary);
+      box-sizing: border-box;
+      box-shadow: rgb(246, 246, 246) 1.5px 1.5px 0px 0px inset, rgb(0, 0, 0) 1.5px 1.5px 0px 0px, rgb(130, 130, 132) -1.5px -1.5px 0px 0px inset;
+      font-size: 24px;
+      padding: 4px 24px;
+      height: 60px;
+      width: 320px;
+      opacity: 0;
+      pointer-events: all;
+    }
+
+    .mui-style-wncf7t:hover {
+      text-decoration: none;
+      background-color: rgb(123, 123, 125);
+      box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 4px -1px, rgba(0, 0, 0, 0.14) 0px 4px 5px 0px, rgba(0, 0, 0, 0.12) 0px 1px 10px 0px;
+    }
+
+    @media (hover: none) {
+      .mui-style-wncf7t:hover {
+        background-color: rgb(177, 177, 179);
+      }
+    }
+
+    .mui-style-wncf7t:active {
+      box-shadow: rgba(0, 0, 0, 0.2) 0px 5px 5px -3px, rgba(0, 0, 0, 0.14) 0px 8px 10px 1px, rgba(0, 0, 0, 0.12) 0px 3px 14px 2px;
+    }
+
+    .mui-style-wncf7t.Mui-focusVisible {
+      box-shadow: rgba(0, 0, 0, 0.2) 0px 3px 5px -1px, rgba(0, 0, 0, 0.14) 0px 6px 10px 0px, rgba(0, 0, 0, 0.12) 0px 1px 18px 0px;
+    }
+
+    .mui-style-wncf7t.Mui-disabled {
+      color: rgba(255, 255, 255, 0.3);
+      box-shadow: none;
+      background-color: rgba(255, 255, 255, 0.12);
+    }
+
+    .mui-style-wncf7t.Mui-disabled {
+      filter: contrast(0.5);
+      background: rgb(177, 177, 179);
+      box-shadow: rgb(246, 246, 246) 1.5px 1.5px 0px 0px inset, rgb(0, 0, 0) 1.5px 1.5px 0px 0px, rgb(130, 130, 132) -1.5px -1.5px 0px 0px inset;
+      color: rgb(255, 255, 255);
+    }
+
+    .mui-style-wncf7t.out {
+      box-shadow: rgb(246, 246, 246) 1.5px 1.5px 0px 0px, rgb(130, 130, 132) -1.5px -1.5px 0px 0px inset, rgb(0, 0, 0) 1.5px 1.5px 0px 0px inset !important;
+    }
+
+    .mui-style-wncf7t:focus {
+      box-shadow: rgb(246, 246, 246) 1.5px 1.5px 0px 0px inset, rgb(0, 0, 0) 1.5px 1.5px 0px 0px, rgb(130, 130, 132) -1.5px -1.5px 0px 0px inset;
+    }
+
+    .mui-style-wncf7t:hover {
+      background-color: var(--ps-primary);
+      box-shadow: rgb(246, 246, 246) 1.5px 1.5px 0px 0px inset, rgb(0, 0, 0) 1.5px 1.5px 0px 0px, rgb(130, 130, 132) -1.5px -1.5px 0px 0px inset;
+    }
+
+    .mui-style-wncf7t:active {
+      box-shadow: rgb(246, 246, 246) 3px 3px 0px 0px, rgb(130, 130, 132) -3px -3px 0px 0px inset, rgb(0, 0, 0) 3px 3px 0px 0px inset;
+    }
+
+    .mui-style-azhrme {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      box-sizing: border-box;
+      flex-shrink: 0;
+      position: relative;
+      z-index: 99;
+      background-color: var(--ps-gray);
+      padding: 8px;
+      height: 64px;
+      box-shadow: rgb(255, 255, 255) 0px 2px 0px inset;
+    }
+
+    .mui-style-1144se1 {
+      font-family: "Pxlvetica", sans-serif;
+      font-weight: 500;
+      line-height: 1.75;
+      min-width: 64px;
+      transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, border-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+      color: rgb(0, 0, 0);
+      border-radius: 0px;
+      text-transform: capitalize;
+      background-color: var(--ps-primary);
+      box-sizing: border-box;
+      box-shadow: rgb(246, 246, 246) 1.5px 1.5px 0px 0px inset, rgb(0, 0, 0) 1.5px 1.5px 0px 0px, rgb(130, 130, 132) -1.5px -1.5px 0px 0px inset;
+      height: 32px;
+      font-size: 24px;
+      padding: 4px 24px;
+    }
+
+    .mui-style-1144se1:hover {
+      text-decoration: none;
+      background-color: rgb(123, 123, 125);
+      box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 4px -1px, rgba(0, 0, 0, 0.14) 0px 4px 5px 0px, rgba(0, 0, 0, 0.12) 0px 1px 10px 0px;
+    }
+
+    @media (hover: none) {
+      .mui-style-1144se1:hover {
+        background-color: rgb(177, 177, 179);
+      }
+    }
+
+    .mui-style-1144se1:active {
+      box-shadow: rgba(0, 0, 0, 0.2) 0px 5px 5px -3px, rgba(0, 0, 0, 0.14) 0px 8px 10px 1px, rgba(0, 0, 0, 0.12) 0px 3px 14px 2px;
+    }
+
+    .mui-style-1144se1.Mui-focusVisible {
+      box-shadow: rgba(0, 0, 0, 0.2) 0px 3px 5px -1px, rgba(0, 0, 0, 0.14) 0px 6px 10px 0px, rgba(0, 0, 0, 0.12) 0px 1px 18px 0px;
+    }
+
+    .mui-style-1144se1.Mui-disabled {
+      color: rgba(255, 255, 255, 0.3);
+      box-shadow: none;
+      background-color: rgba(255, 255, 255, 0.12);
+    }
+
+    .mui-style-1144se1.Mui-disabled {
+      filter: contrast(0.5);
+      background: rgb(177, 177, 179);
+      box-shadow: rgb(246, 246, 246) 1.5px 1.5px 0px 0px inset, rgb(0, 0, 0) 1.5px 1.5px 0px 0px, rgb(130, 130, 132) -1.5px -1.5px 0px 0px inset;
+      color: rgb(255, 255, 255);
+    }
+
+    .mui-style-1144se1.out {
+      box-shadow: rgb(246, 246, 246) 1.5px 1.5px 0px 0px, rgb(130, 130, 132) -1.5px -1.5px 0px 0px inset, rgb(0, 0, 0) 1.5px 1.5px 0px 0px inset !important;
+    }
+
+    .mui-style-1144se1:focus {
+      box-shadow: rgb(246, 246, 246) 1.5px 1.5px 0px 0px inset, rgb(0, 0, 0) 1.5px 1.5px 0px 0px, rgb(130, 130, 132) -1.5px -1.5px 0px 0px inset;
+    }
+
+    .mui-style-1144se1:hover {
+      background-color: var(--ps-primary);
+      box-shadow: rgb(246, 246, 246) 1.5px 1.5px 0px 0px inset, rgb(0, 0, 0) 1.5px 1.5px 0px 0px, rgb(130, 130, 132) -1.5px -1.5px 0px 0px inset;
+    }
+
+    .mui-style-1144se1:active {
+      box-shadow: rgb(246, 246, 246) 3px 3px 0px 0px, rgb(130, 130, 132) -3px -3px 0px 0px inset, rgb(0, 0, 0) 3px 3px 0px 0px inset;
+    }
+
+    .mui-style-12ic6y5 {
+      text-align: center;
+      flex: 0 0 auto;
+      font-size: 1.5rem;
+      padding: 8px;
+      overflow: visible;
+      color: rgb(255, 255, 255);
+      transition: background-color 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+      border-radius: 0px;
+      background: var(--ps-primary);
+      box-shadow: rgb(246, 246, 246) 1.5px 1.5px 0px 0px inset, rgb(0, 0, 0) 1.5px 1.5px 0px 0px, rgb(130, 130, 132) -1.5px -1.5px 0px 0px inset;
+    }
+
+    .mui-style-12ic6y5:hover {
+      background-color: rgba(255, 255, 255, 0.08);
+    }
+
+    @media (hover: none) {
+      .mui-style-12ic6y5:hover {
+        background-color: transparent;
+      }
+    }
+
+    .mui-style-12ic6y5.Mui-disabled {
+      background-color: transparent;
+      color: rgba(255, 255, 255, 0.3);
+    }
+
+    .mui-style-12ic6y5:hover {
+      background-color: var(--ps-primary);
+      box-shadow: rgb(246, 246, 246) 1.5px 1.5px 0px 0px inset, rgb(0, 0, 0) 1.5px 1.5px 0px 0px, rgb(130, 130, 132) -1.5px -1.5px 0px 0px inset;
+    }
+
+    .mui-style-12ic6y5:active {
+      box-shadow: rgb(246, 246, 246) 1.5px 1.5px 0px 0px, rgb(130, 130, 132) -1.5px -1.5px 0px 0px inset, rgb(0, 0, 0) 1.5px 1.5px 0px 0px inset;
+    }
+
+    .mui-style-12ic6y5.out {
+      box-shadow: rgb(246, 246, 246) 1.5px 1.5px 0px 0px, rgb(130, 130, 132) -1.5px -1.5px 0px 0px inset, rgb(0, 0, 0) 1.5px 1.5px 0px 0px inset;
+    }
+
+    .mui-style-12ic6y5.out:active {
+      box-shadow: rgb(246, 246, 246) 1.5px 1.5px 0px 0px inset, rgb(0, 0, 0) 1.5px 1.5px 0px 0px, rgb(130, 130, 132) -1.5px -1.5px 0px 0px inset;
+    }
+
+    .mui-style-1myl9ll {
+      font-family: "Pxlvetica", sans-serif;
+      font-weight: 500;
+      line-height: 1.75;
+      min-width: 64px;
+      transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, border-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+      color: rgb(0, 0, 0);
+      border-radius: 0px;
+      text-transform: capitalize;
+      background-color: var(--ps-primary);
+      box-sizing: border-box;
+      box-shadow: rgb(246, 246, 246) 1.5px 1.5px 0px 0px inset, rgb(0, 0, 0) 1.5px 1.5px 0px 0px, rgb(130, 130, 132) -1.5px -1.5px 0px 0px inset;
+      font-size: 24px;
+      padding: 4px 24px;
+      height: 60px;
+      width: 320px;
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .mui-style-1myl9ll:hover {
+      text-decoration: none;
+      background-color: rgb(123, 123, 125);
+      box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 4px -1px, rgba(0, 0, 0, 0.14) 0px 4px 5px 0px, rgba(0, 0, 0, 0.12) 0px 1px 10px 0px;
+    }
+
+    @media (hover: none) {
+      .mui-style-1myl9ll:hover {
+        background-color: rgb(177, 177, 179);
+      }
+    }
+
+    .mui-style-1myl9ll:active {
+      box-shadow: rgba(0, 0, 0, 0.2) 0px 5px 5px -3px, rgba(0, 0, 0, 0.14) 0px 8px 10px 1px, rgba(0, 0, 0, 0.12) 0px 3px 14px 2px;
+    }
+
+    .mui-style-1myl9ll.Mui-focusVisible {
+      box-shadow: rgba(0, 0, 0, 0.2) 0px 3px 5px -1px, rgba(0, 0, 0, 0.14) 0px 6px 10px 0px, rgba(0, 0, 0, 0.12) 0px 1px 18px 0px;
+    }
+
+    .mui-style-1myl9ll.Mui-disabled {
+      color: rgba(255, 255, 255, 0.3);
+      box-shadow: none;
+      background-color: rgba(255, 255, 255, 0.12);
+    }
+
+    .mui-style-1myl9ll.Mui-disabled {
+      filter: contrast(0.5);
+      background: rgb(177, 177, 179);
+      box-shadow: rgb(246, 246, 246) 1.5px 1.5px 0px 0px inset, rgb(0, 0, 0) 1.5px 1.5px 0px 0px, rgb(130, 130, 132) -1.5px -1.5px 0px 0px inset;
+      color: rgb(255, 255, 255);
+    }
+
+    .mui-style-1myl9ll.out {
+      box-shadow: rgb(246, 246, 246) 1.5px 1.5px 0px 0px, rgb(130, 130, 132) -1.5px -1.5px 0px 0px inset, rgb(0, 0, 0) 1.5px 1.5px 0px 0px inset !important;
+    }
+
+    .mui-style-1myl9ll:focus {
+      box-shadow: rgb(246, 246, 246) 1.5px 1.5px 0px 0px inset, rgb(0, 0, 0) 1.5px 1.5px 0px 0px, rgb(130, 130, 132) -1.5px -1.5px 0px 0px inset;
+    }
+
+    .mui-style-1myl9ll:hover {
+      background-color: var(--ps-primary);
+      box-shadow: rgb(246, 246, 246) 1.5px 1.5px 0px 0px inset, rgb(0, 0, 0) 1.5px 1.5px 0px 0px, rgb(130, 130, 132) -1.5px -1.5px 0px 0px inset;
+    }
+
+    .mui-style-1myl9ll:active {
+      box-shadow: rgb(246, 246, 246) 3px 3px 0px 0px, rgb(130, 130, 132) -3px -3px 0px 0px inset, rgb(0, 0, 0) 3px 3px 0px 0px inset;
+    }
+
+    .mui-style-9efd8f {
+      display: inline-flex;
+      -moz-box-align: center;
+      align-items: center;
+      -moz-box-pack: center;
+      justify-content: center;
+      position: relative;
+      outline: 0px;
+      border: 0px;
+      margin: 0px;
+      cursor: pointer;
+      user-select: none;
+      vertical-align: middle;
+      appearance: none;
+      text-decoration: none;
+      font-family: "Pxlvetica", sans-serif;
+      font-weight: 500;
+      line-height: 1.75;
+      min-width: 64px;
+      transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, border-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+      color: rgb(0, 0, 0);
+      border-radius: 0px;
+      text-transform: capitalize;
+      background-color: var(--ps-primary);
+      box-sizing: border-box;
+      box-shadow: rgb(246, 246, 246) 1.5px 1.5px 0px 0px inset, rgb(0, 0, 0) 1.5px 1.5px 0px 0px, rgb(130, 130, 132) -1.5px -1.5px 0px 0px inset;
+      font-size: 24px;
+      padding: 4px 24px;
+      height: 60px;
+      width: 320px;
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .mui-style-9efd8f::-moz-focus-inner {
+      border-style: none;
+    }
+
+    .mui-style-9efd8f.Mui-disabled {
+      pointer-events: none;
+      cursor: default;
+    }
+
+    @media print {
+      .mui-style-9efd8f {
+        print-color-adjust: exact;
+      }
+    }
+
+    .mui-style-9efd8f:hover {
+      text-decoration: none;
+      background-color: rgb(123, 123, 125);
+      box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 4px -1px, rgba(0, 0, 0, 0.14) 0px 4px 5px 0px, rgba(0, 0, 0, 0.12) 0px 1px 10px 0px;
+    }
+
+    @media (hover: none) {
+      .mui-style-9efd8f:hover {
+        background-color: rgb(177, 177, 179);
+      }
+    }
+
+    .mui-style-9efd8f:active {
+      box-shadow: rgba(0, 0, 0, 0.2) 0px 5px 5px -3px, rgba(0, 0, 0, 0.14) 0px 8px 10px 1px, rgba(0, 0, 0, 0.12) 0px 3px 14px 2px;
+    }
+
+    .mui-style-9efd8f.Mui-focusVisible {
+      box-shadow: rgba(0, 0, 0, 0.2) 0px 3px 5px -1px, rgba(0, 0, 0, 0.14) 0px 6px 10px 0px, rgba(0, 0, 0, 0.12) 0px 1px 18px 0px;
+    }
+
+    .mui-style-9efd8f.Mui-disabled {
+      color: rgba(255, 255, 255, 0.3);
+      box-shadow: none;
+      background-color: rgba(255, 255, 255, 0.12);
+    }
+
+    .mui-style-9efd8f.Mui-disabled {
+      filter: contrast(0.5);
+      background: rgb(177, 177, 179);
+      box-shadow: rgb(246, 246, 246) 1.5px 1.5px 0px 0px inset, rgb(0, 0, 0) 1.5px 1.5px 0px 0px, rgb(130, 130, 132) -1.5px -1.5px 0px 0px inset;
+      color: rgb(255, 255, 255);
+    }
+
+    .mui-style-9efd8f.out {
+      box-shadow: rgb(246, 246, 246) 1.5px 1.5px 0px 0px, rgb(130, 130, 132) -1.5px -1.5px 0px 0px inset, rgb(0, 0, 0) 1.5px 1.5px 0px 0px inset !important;
+    }
+
+    .mui-style-9efd8f:focus {
+      box-shadow: rgb(246, 246, 246) 1.5px 1.5px 0px 0px inset, rgb(0, 0, 0) 1.5px 1.5px 0px 0px, rgb(130, 130, 132) -1.5px -1.5px 0px 0px inset;
+    }
+
+    .mui-style-9efd8f:hover {
+      background-color: var(--ps-primary);
+      box-shadow: rgb(246, 246, 246) 1.5px 1.5px 0px 0px inset, rgb(0, 0, 0) 1.5px 1.5px 0px 0px, rgb(130, 130, 132) -1.5px -1.5px 0px 0px inset;
+    }
+
+    .mui-style-9efd8f:active {
+      box-shadow: rgb(246, 246, 246) 3px 3px 0px 0px, rgb(130, 130, 132) -3px -3px 0px 0px inset, rgb(0, 0, 0) 3px 3px 0px 0px inset;
+    }
+
+    .mui-style-1fn297c {
+      display: flex;
+      flex-direction: column;
+      padding: 8px;
+      color: var(--ps-black);
+      background: var(--ps-primary);
+      box-shadow: rgb(246, 246, 246) 1.5px 1.5px 0px 0px inset, rgb(0, 0, 0) 1.5px 1.5px 0px 0px, rgb(130, 130, 132) -1.5px -1.5px 0px 0px inset;
+      width: 520px;
+      height: 216px;
+    }
+
+    .mui-style-1biap26 {
+      display: flex;
+      flex-direction: row;
+      -moz-box-pack: justify;
+      justify-content: space-between;
+      -moz-box-align: center;
+      align-items: center;
+      padding-left: 4px;
+      padding-right: 4px;
+      height: 24px;
+      background-color: var(--ps-focus);
+    }
+
+    .mui-style-1s9mqc4 {
+      margin: 0px;
+      font-family: "Pxlvetica", sans-serif;
+      line-height: 1.5;
+      color: rgb(197, 195, 198);
+      text-transform: capitalize;
+      font-size: 16px;
+      font-weight: 500;
+    }
+
+    .mui-style-v75g5 {
+      display: flex;
+      flex-direction: row;
+      opacity: 0.3;
+    }
+
+    .mui-style-v75g5> :not(style):not(style) {
+      margin: 0px;
+    }
+
+    .mui-style-v75g5> :not(style)~ :not(style) {
+      margin-left: 4px;
+    }
+
+    .mui-style-1w3gzaz {
+      text-align: center;
+      flex: 0 0 auto;
+      overflow: visible;
+      color: rgb(255, 255, 255);
+      transition: background-color 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+      padding: 5px;
+      font-size: 1.125rem;
+      border-radius: 0px;
+      background: var(--ps-primary);
+      box-shadow: rgb(246, 246, 246) 1.5px 1.5px 0px 0px inset, rgb(0, 0, 0) 1.5px 1.5px 0px 0px, rgb(130, 130, 132) -1.5px -1.5px 0px 0px inset;
+      height: 20px;
+      width: 20px;
+      pointer-events: none;
+    }
+
+    .mui-style-1w3gzaz:hover {
+      background-color: rgba(255, 255, 255, 0.08);
+    }
+
+    @media (hover: none) {
+      .mui-style-1w3gzaz:hover {
+        background-color: transparent;
+      }
+    }
+
+    .mui-style-1w3gzaz.Mui-disabled {
+      background-color: transparent;
+      color: rgba(255, 255, 255, 0.3);
+    }
+
+    .mui-style-1w3gzaz:hover {
+      background-color: var(--ps-primary);
+      box-shadow: rgb(246, 246, 246) 1.5px 1.5px 0px 0px inset, rgb(0, 0, 0) 1.5px 1.5px 0px 0px, rgb(130, 130, 132) -1.5px -1.5px 0px 0px inset;
+    }
+
+    .mui-style-1w3gzaz:active {
+      box-shadow: rgb(246, 246, 246) 1.5px 1.5px 0px 0px, rgb(130, 130, 132) -1.5px -1.5px 0px 0px inset, rgb(0, 0, 0) 1.5px 1.5px 0px 0px inset;
+    }
+
+    .mui-style-1w3gzaz.out {
+      box-shadow: rgb(246, 246, 246) 1.5px 1.5px 0px 0px, rgb(130, 130, 132) -1.5px -1.5px 0px 0px inset, rgb(0, 0, 0) 1.5px 1.5px 0px 0px inset;
+    }
+
+    .mui-style-1w3gzaz.out:active {
+      box-shadow: rgb(246, 246, 246) 1.5px 1.5px 0px 0px inset, rgb(0, 0, 0) 1.5px 1.5px 0px 0px, rgb(130, 130, 132) -1.5px -1.5px 0px 0px inset;
+    }
+
+    .mui-style-1427c0r {
+      display: inline-flex;
+      -moz-box-align: center;
+      align-items: center;
+      -moz-box-pack: center;
+      justify-content: center;
+      position: relative;
+      box-sizing: border-box;
+      outline: 0px;
+      border: 0px;
+      margin: 0px;
+      cursor: pointer;
+      user-select: none;
+      vertical-align: middle;
+      appearance: none;
+      text-decoration: none;
+      text-align: center;
+      flex: 0 0 auto;
+      overflow: visible;
+      color: rgb(255, 255, 255);
+      transition: background-color 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+      padding: 5px;
+      font-size: 1.125rem;
+      border-radius: 0px;
+      background: var(--ps-primary);
+      box-shadow: rgb(246, 246, 246) 1.5px 1.5px 0px 0px inset, rgb(0, 0, 0) 1.5px 1.5px 0px 0px, rgb(130, 130, 132) -1.5px -1.5px 0px 0px inset;
+      height: 20px;
+      width: 20px;
+      pointer-events: none;
+    }
+
+    .mui-style-1427c0r::-moz-focus-inner {
+      border-style: none;
+    }
+
+    .mui-style-1427c0r.Mui-disabled {
+      pointer-events: none;
+      cursor: default;
+    }
+
+    @media print {
+      .mui-style-1427c0r {
+        print-color-adjust: exact;
+      }
+    }
+
+    .mui-style-1427c0r:hover {
+      background-color: rgba(255, 255, 255, 0.08);
+    }
+
+    @media (hover: none) {
+      .mui-style-1427c0r:hover {
+        background-color: transparent;
+      }
+    }
+
+    .mui-style-1427c0r.Mui-disabled {
+      background-color: transparent;
+      color: rgba(255, 255, 255, 0.3);
+    }
+
+    .mui-style-1427c0r:hover {
+      background-color: var(--ps-primary);
+      box-shadow: rgb(246, 246, 246) 1.5px 1.5px 0px 0px inset, rgb(0, 0, 0) 1.5px 1.5px 0px 0px, rgb(130, 130, 132) -1.5px -1.5px 0px 0px inset;
+    }
+
+    .mui-style-1427c0r:active {
+      box-shadow: rgb(246, 246, 246) 1.5px 1.5px 0px 0px, rgb(130, 130, 132) -1.5px -1.5px 0px 0px inset, rgb(0, 0, 0) 1.5px 1.5px 0px 0px inset;
+    }
+
+    .mui-style-1427c0r.out {
+      box-shadow: rgb(246, 246, 246) 1.5px 1.5px 0px 0px, rgb(130, 130, 132) -1.5px -1.5px 0px 0px inset, rgb(0, 0, 0) 1.5px 1.5px 0px 0px inset;
+    }
+
+    .mui-style-1427c0r.out:active {
+      box-shadow: rgb(246, 246, 246) 1.5px 1.5px 0px 0px inset, rgb(0, 0, 0) 1.5px 1.5px 0px 0px, rgb(130, 130, 132) -1.5px -1.5px 0px 0px inset;
+    }
+
+    .mui-style-zpd2uy {
+      display: flex;
+      flex-direction: row;
+      -moz-box-align: center;
+      align-items: center;
+      -moz-box-pack: center;
+      justify-content: center;
+      margin-top: 10px;
+    }
+
+    .mui-style-zpd2uy> :not(style):not(style) {
+      margin: 0px;
+    }
+
+    .mui-style-zpd2uy> :not(style)~ :not(style) {
+      margin-left: 8px;
+    }
+
+    .mui-style-g1fefv {
+      margin: 0px;
+      font-family: "Pxlvetica", sans-serif;
+      font-size: 20px;
+      font-weight: 500;
+      line-height: 1;
+    }
+
+    .mui-style-1wccapi {
+      display: flex;
+      flex-direction: column;
+      -moz-box-pack: center;
+      justify-content: center;
+      -moz-box-align: center;
+      align-items: center;
+      margin-top: 20px;
+    }
+
+    .mui-style-1wccapi> :not(style):not(style) {
+      margin: 0px;
+    }
+
+    .mui-style-1wccapi> :not(style)~ :not(style) {
+      margin-top: 20px;
+    }
+
+    .mui-style-y6u077 {
+      margin: 0px;
+      font-family: "Pxlvetica", sans-serif;
+      font-size: 1rem;
+      font-weight: 500;
+      line-height: 1;
+    }
+
+    .mui-style-wvlgqo {
+      display: flex;
+      flex-direction: row;
+      -moz-box-align: center;
+      align-items: center;
+      -moz-box-pack: center;
+      justify-content: center;
+    }
+
+    .mui-style-wvlgqo> :not(style):not(style) {
+      margin: 0px;
+    }
+
+    .mui-style-wvlgqo> :not(style)~ :not(style) {
+      margin-left: 20px;
+    }
+
+    .mui-style-1qn4e2u {
+      display: flex;
+      flex-direction: column;
+      -moz-box-align: center;
+      align-items: center;
+      -moz-box-pack: center;
+      justify-content: center;
+      width: 70px;
+      height: 70px;
+      background: rgb(177, 177, 179);
+      box-shadow: rgb(246, 246, 246) 1.5px 1.5px 0px 0px, rgb(130, 130, 132) -1.5px -1.5px 0px 0px inset, rgb(0, 0, 0) 1.5px 1.5px 0px 0px inset;
+    }
+
+    .mui-style-1qn4e2u> :not(style):not(style) {
+      margin: 0px;
+    }
+
+    .mui-style-1qn4e2u> :not(style)~ :not(style) {
+      margin-top: 2px;
+    }
+
+    .mui-style-1789mna {
+      margin: 0px;
+      font-family: "ChillPixels";
+      font-size: 36px;
+      line-height: 1;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+
+    .mui-style-1qnzhoo {
+      margin: 0px;
+      font-family: "Pxlvetica", sans-serif;
+      font-size: 12px;
+      line-height: 1;
+      font-weight: 500;
+    }
+
+    .mui-style-1etzpws {
+      color: rgb(255, 255, 255);
+      transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+      position: fixed;
+      top: 10%;
+      right: 10%;
+      margin: auto;
+      min-height: 250px;
+      padding: 8px;
+      border-radius: 0px;
+      background: var(--ps-primary);
+      box-shadow: rgb(14, 14, 14) 3px 3px 0px 0px, rgb(130, 130, 132) -3px -3px 0px 0px inset, rgb(246, 246, 246) 3px 3px 0px 0px inset;
+      z-index: 2;
+    }
+
+    @media (min-width: 0px) {
+      .mui-style-1etzpws {
+        width: 90%;
+      }
+    }
+
+    @media (min-width: 834px) {
+      .mui-style-1etzpws {
+        width: 910px;
+      }
+    }
+
+    .mui-style-1xd8q93 {
+      flex: 0 0 auto;
+      height: 24px;
+      font-size: 16px;
+      padding: 0px 4px;
+      color: rgb(197, 195, 198);
+      background-color: var(--ps-focus);
+    }
+
+    .mui-style-n21548 {
+      margin: 0px;
+      font-family: "Pxlvetica", sans-serif;
+      font-weight: 500;
+      line-height: 1.6;
+      flex: 0 0 auto;
+      height: 24px;
+      font-size: 16px;
+      padding: 0px 4px;
+      color: rgb(197, 195, 198);
+      background-color: var(--ps-focus);
+    }
+
+    .mui-style-95g4uk {
+      display: flex;
+      flex-direction: row;
+      -moz-box-pack: justify;
+      justify-content: space-between;
+      -moz-box-align: center;
+      align-items: center;
+    }
+
+    .mui-style-19anwvx {
+      margin: 0px;
+      font-family: "Pxlvetica", sans-serif;
+      font-weight: 400;
+      font-size: 1rem;
+      line-height: 1.5;
+    }
+
+    .mui-style-15ysvdz {
+      text-align: center;
+      flex: 0 0 auto;
+      overflow: visible;
+      color: rgb(255, 255, 255);
+      transition: background-color 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+      padding: 5px;
+      font-size: 1.125rem;
+      border-radius: 0px;
+      background: var(--ps-primary);
+      box-shadow: rgb(246, 246, 246) 1.5px 1.5px 0px 0px inset, rgb(0, 0, 0) 1.5px 1.5px 0px 0px, rgb(130, 130, 132) -1.5px -1.5px 0px 0px inset;
+      height: 20px;
+      width: 20px;
+    }
+
+    .mui-style-15ysvdz:hover {
+      background-color: rgba(255, 255, 255, 0.08);
+    }
+
+    @media (hover: none) {
+      .mui-style-15ysvdz:hover {
+        background-color: transparent;
+      }
+    }
+
+    .mui-style-15ysvdz.Mui-disabled {
+      background-color: transparent;
+      color: rgba(255, 255, 255, 0.3);
+    }
+
+    .mui-style-15ysvdz:hover {
+      background-color: var(--ps-primary);
+      box-shadow: rgb(246, 246, 246) 1.5px 1.5px 0px 0px inset, rgb(0, 0, 0) 1.5px 1.5px 0px 0px, rgb(130, 130, 132) -1.5px -1.5px 0px 0px inset;
+    }
+
+    .mui-style-15ysvdz:active {
+      box-shadow: rgb(246, 246, 246) 1.5px 1.5px 0px 0px, rgb(130, 130, 132) -1.5px -1.5px 0px 0px inset, rgb(0, 0, 0) 1.5px 1.5px 0px 0px inset;
+    }
+
+    .mui-style-15ysvdz.out {
+      box-shadow: rgb(246, 246, 246) 1.5px 1.5px 0px 0px, rgb(130, 130, 132) -1.5px -1.5px 0px 0px inset, rgb(0, 0, 0) 1.5px 1.5px 0px 0px inset;
+    }
+
+    .mui-style-15ysvdz.out:active {
+      box-shadow: rgb(246, 246, 246) 1.5px 1.5px 0px 0px inset, rgb(0, 0, 0) 1.5px 1.5px 0px 0px, rgb(130, 130, 132) -1.5px -1.5px 0px 0px inset;
+    }
+
+    .mui-style-1bnl1fm {
+      display: inline-flex;
+      -moz-box-align: center;
+      align-items: center;
+      -moz-box-pack: center;
+      justify-content: center;
+      position: relative;
+      box-sizing: border-box;
+      outline: 0px;
+      border: 0px;
+      margin: 0px;
+      cursor: pointer;
+      user-select: none;
+      vertical-align: middle;
+      appearance: none;
+      text-decoration: none;
+      text-align: center;
+      flex: 0 0 auto;
+      overflow: visible;
+      color: rgb(255, 255, 255);
+      transition: background-color 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+      padding: 5px;
+      font-size: 1.125rem;
+      border-radius: 0px;
+      background: var(--ps-primary);
+      box-shadow: rgb(246, 246, 246) 1.5px 1.5px 0px 0px inset, rgb(0, 0, 0) 1.5px 1.5px 0px 0px, rgb(130, 130, 132) -1.5px -1.5px 0px 0px inset;
+      height: 20px;
+      width: 20px;
+    }
+
+    .mui-style-1bnl1fm::-moz-focus-inner {
+      border-style: none;
+    }
+
+    .mui-style-1bnl1fm.Mui-disabled {
+      pointer-events: none;
+      cursor: default;
+    }
+
+    @media print {
+      .mui-style-1bnl1fm {
+        print-color-adjust: exact;
+      }
+    }
+
+    .mui-style-1bnl1fm:hover {
+      background-color: rgba(255, 255, 255, 0.08);
+    }
+
+    @media (hover: none) {
+      .mui-style-1bnl1fm:hover {
+        background-color: transparent;
+      }
+    }
+
+    .mui-style-1bnl1fm.Mui-disabled {
+      background-color: transparent;
+      color: rgba(255, 255, 255, 0.3);
+    }
+
+    .mui-style-1bnl1fm:hover {
+      background-color: var(--ps-primary);
+      box-shadow: rgb(246, 246, 246) 1.5px 1.5px 0px 0px inset, rgb(0, 0, 0) 1.5px 1.5px 0px 0px, rgb(130, 130, 132) -1.5px -1.5px 0px 0px inset;
+    }
+
+    .mui-style-1bnl1fm:active {
+      box-shadow: rgb(246, 246, 246) 1.5px 1.5px 0px 0px, rgb(130, 130, 132) -1.5px -1.5px 0px 0px inset, rgb(0, 0, 0) 1.5px 1.5px 0px 0px inset;
+    }
+
+    .mui-style-1bnl1fm.out {
+      box-shadow: rgb(246, 246, 246) 1.5px 1.5px 0px 0px, rgb(130, 130, 132) -1.5px -1.5px 0px 0px inset, rgb(0, 0, 0) 1.5px 1.5px 0px 0px inset;
+    }
+
+    .mui-style-1bnl1fm.out:active {
+      box-shadow: rgb(246, 246, 246) 1.5px 1.5px 0px 0px inset, rgb(0, 0, 0) 1.5px 1.5px 0px 0px, rgb(130, 130, 132) -1.5px -1.5px 0px 0px inset;
+    }
+
+    .mui-style-1dd44ar {
+      flex: 1 1 auto;
+      overflow-y: auto;
+      position: relative;
+      padding: 10px 0px;
+      height: 100%;
+      max-height: 680px;
+    }
+
+    .MuiDialogTitle-root+.mui-style-1dd44ar {
+      padding-top: 0px;
+    }
+
+    .mui-style-dyms0q {
+      display: flex;
+      flex-direction: column;
+      max-height: 700px;
+    }
+
+    .mui-style-dyms0q> :not(style):not(style) {
+      margin: 0px;
+    }
+
+    .mui-style-dyms0q> :not(style)~ :not(style) {
+      margin-top: 20px;
+    }
+
+    .mui-style-5fqmyv {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .mui-style-5fqmyv> :not(style):not(style) {
+      margin: 0px;
+    }
+
+    .mui-style-5fqmyv> :not(style)~ :not(style) {
+      margin-top: 20px;
+    }
+
+    @media (min-width: 0px) {
+      .mui-style-5fqmyv {
+        padding-right: 20px;
+      }
+    }
+
+    @media (min-width: 834px) {
+      .mui-style-5fqmyv {
+        padding-right: 80px;
+      }
+    }
+
+    .mui-style-10y69h1 {
+      margin: 0px;
+      font-weight: 400;
+      font-size: 16px;
+      line-height: normal;
+      font-family: "ChillPixels";
+    }
+
+    @media (min-width: 0px) {
+      .mui-style-10y69h1 {
+        font-size: 32px;
+        -webkit-text-stroke: 1px rgb(0, 0, 0);
+      }
+    }
+
+    @media (min-width: 834px) {
+      .mui-style-10y69h1 {
+        font-size: 56px;
+        -webkit-text-stroke: 3px rgb(0, 0, 0);
+      }
+    }
+
+    .mui-style-11f7x6w {
+      margin: 0px;
+      font-family: "Pxlvetica", sans-serif;
+      font-weight: 400;
+      font-size: 1rem;
+      line-height: 1.5;
+      color: var(--ps-black);
+    }
+
+    @media (min-width: 0px) {
+      .mui-style-11f7x6w {
+        font-size: 14px;
+      }
+    }
+
+    @media (min-width: 834px) {
+      .mui-style-11f7x6w {
+        font-size: 20px;
+      }
+    }
+
+    .mui-style-1m0eqzd {
+      position: relative;
+      transition: margin 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+      overflow-anchor: none;
+      border-radius: 0px;
+      background: none;
+      box-shadow: none;
+    }
+
+    .mui-style-1m0eqzd::before {
+      position: absolute;
+      left: 0px;
+      top: -1px;
+      right: 0px;
+      height: 1px;
+      content: "";
+      opacity: 1;
+      background-color: rgba(255, 255, 255, 0.12);
+      transition: opacity 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, background-color 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+    }
+
+    .mui-style-1m0eqzd:first-of-type::before {
+      display: none;
+    }
+
+    .mui-style-1m0eqzd.Mui-expanded::before {
+      opacity: 0;
+    }
+
+    .mui-style-1m0eqzd.Mui-expanded:first-of-type {
+      margin-top: 0px;
+    }
+
+    .mui-style-1m0eqzd.Mui-expanded:last-of-type {
+      margin-bottom: 0px;
+    }
+
+    .mui-style-1m0eqzd.Mui-expanded+.mui-style-1m0eqzd.Mui-expanded::before {
+      display: none;
+    }
+
+    .mui-style-1m0eqzd.Mui-disabled {
+      background-color: rgba(255, 255, 255, 0.12);
+    }
+
+    .mui-style-1m0eqzd:first-of-type {
+      border-top-left-radius: 4px;
+      border-top-right-radius: 4px;
+    }
+
+    .mui-style-1m0eqzd:last-of-type {
+      border-bottom-left-radius: 4px;
+      border-bottom-right-radius: 4px;
+    }
+
+    @supports (-ms-ime-align: auto) {
+      .mui-style-1m0eqzd:last-of-type {
+        border-bottom-left-radius: 0px;
+        border-bottom-right-radius: 0px;
+      }
+    }
+
+    .mui-style-1m0eqzd.Mui-expanded {
+      margin: 16px 0px;
+    }
+
+    .mui-style-1m0eqzd::before {
+      display: none;
+    }
+
+    .mui-style-1m0eqzd.Mui-expanded {
+      margin: 0px;
+    }
+
+    .mui-style-31qjnm {
+      color: rgb(255, 255, 255);
+      position: relative;
+      transition: margin 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+      overflow-anchor: none;
+      border-radius: 0px;
+      background: none;
+      box-shadow: none;
+    }
+
+    .mui-style-31qjnm::before {
+      position: absolute;
+      left: 0px;
+      top: -1px;
+      right: 0px;
+      height: 1px;
+      content: "";
+      opacity: 1;
+      background-color: rgba(255, 255, 255, 0.12);
+      transition: opacity 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, background-color 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+    }
+
+    .mui-style-31qjnm:first-of-type::before {
+      display: none;
+    }
+
+    .mui-style-31qjnm.Mui-expanded::before {
+      opacity: 0;
+    }
+
+    .mui-style-31qjnm.Mui-expanded:first-of-type {
+      margin-top: 0px;
+    }
+
+    .mui-style-31qjnm.Mui-expanded:last-of-type {
+      margin-bottom: 0px;
+    }
+
+    .mui-style-31qjnm.Mui-expanded+.mui-style-31qjnm.Mui-expanded::before {
+      display: none;
+    }
+
+    .mui-style-31qjnm.Mui-disabled {
+      background-color: rgba(255, 255, 255, 0.12);
+    }
+
+    .mui-style-31qjnm:first-of-type {
+      border-top-left-radius: 4px;
+      border-top-right-radius: 4px;
+    }
+
+    .mui-style-31qjnm:last-of-type {
+      border-bottom-left-radius: 4px;
+      border-bottom-right-radius: 4px;
+    }
+
+    @supports (-ms-ime-align: auto) {
+      .mui-style-31qjnm:last-of-type {
+        border-bottom-left-radius: 0px;
+        border-bottom-right-radius: 0px;
+      }
+    }
+
+    .mui-style-31qjnm.Mui-expanded {
+      margin: 16px 0px;
+    }
+
+    .mui-style-31qjnm::before {
+      display: none;
+    }
+
+    .mui-style-31qjnm.Mui-expanded {
+      margin: 0px;
+    }
+
+    .mui-style-1rnmtiu {
+      display: flex;
+      min-height: 48px;
+      padding: 0px 2px;
+      transition: min-height 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, background-color 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+    }
+
+    .mui-style-1rnmtiu.Mui-focusVisible {
+      background-color: rgba(255, 255, 255, 0.12);
+    }
+
+    .mui-style-1rnmtiu.Mui-disabled {
+      opacity: 0.38;
+    }
+
+    .mui-style-1rnmtiu:hover:not(.Mui-disabled) {
+      cursor: pointer;
+    }
+
+    .mui-style-1rnmtiu.Mui-expanded {
+      min-height: 64px;
+    }
+
+    .mui-style-jqe2yz {
+      -moz-box-align: center;
+      align-items: center;
+      -moz-box-pack: center;
+      justify-content: center;
+      position: relative;
+      box-sizing: border-box;
+      background-color: transparent;
+      outline: 0px;
+      border: 0px;
+      margin: 0px;
+      border-radius: 0px;
+      cursor: pointer;
+      user-select: none;
+      vertical-align: middle;
+      appearance: none;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      min-height: 48px;
+      padding: 0px 2px;
+      transition: min-height 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, background-color 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+    }
+
+    .mui-style-jqe2yz::-moz-focus-inner {
+      border-style: none;
+    }
+
+    .mui-style-jqe2yz.Mui-disabled {
+      pointer-events: none;
+      cursor: default;
+    }
+
+    @media print {
+      .mui-style-jqe2yz {
+        print-color-adjust: exact;
+      }
+    }
+
+    .mui-style-jqe2yz.Mui-focusVisible {
+      background-color: rgba(255, 255, 255, 0.12);
+    }
+
+    .mui-style-jqe2yz.Mui-disabled {
+      opacity: 0.38;
+    }
+
+    .mui-style-jqe2yz:hover:not(.Mui-disabled) {
+      cursor: pointer;
+    }
+
+    .mui-style-jqe2yz.Mui-expanded {
+      min-height: 64px;
+    }
+
+    .mui-style-17o5nyn {
+      display: flex;
+      -moz-box-flex: 1;
+      flex-grow: 1;
+      margin: 12px 0px;
+      transition: margin 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+    }
+
+    .mui-style-17o5nyn.Mui-expanded {
+      margin: 20px 0px;
+    }
+
+    .mui-style-17fo2je {
+      display: flex;
+      flex-direction: row;
+      flex: 1 1 0%;
+    }
+
+    .mui-style-eksek {
+      margin: 0px;
+      font-weight: 400;
+      font-size: 16px;
+      line-height: normal;
+      font-family: "ChillPixels";
+      color: var(--ps-black);
+    }
+
+    @media (min-width: 0px) {
+      .mui-style-eksek {
+        font-size: 18px;
+      }
+    }
+
+    @media (min-width: 834px) {
+      .mui-style-eksek {
+        font-size: 24px;
+      }
+    }
+
+    .mui-style-1n3veo1 {
+      display: flex;
+      color: rgb(255, 255, 255);
+      transform: rotate(0deg);
+      transition: transform 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+    }
+
+    .mui-style-1n3veo1.Mui-expanded {
+      transform: rotate(180deg);
+    }
+
+    .mui-style-a0y2e3 {
+      height: 0px;
+      overflow: hidden;
+      transition: height 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+      visibility: hidden;
+    }
+
+    .mui-style-hboir5 {
+      display: flex;
+      width: 100%;
+    }
+
+    .mui-style-8atqhb {
+      width: 100%;
+    }
+
+    .mui-style-14nhc36 {
+      padding: 1px 2px 2px;
+      font-size: 20px;
+      color: var(--ps-black);
+    }
+
+    .mui-style-9ydyxm {
+      display: flex;
+      flex-direction: column;
+      padding-left: 24px;
+      padding-right: 24px;
+      padding-bottom: 72px;
+    }
+
+    .mui-style-9ydyxm> :not(style):not(style) {
+      margin: 0px;
+    }
+
+    .mui-style-9ydyxm> :not(style)~ :not(style) {
+      margin-top: 24px;
+    }
+
+    .mui-style-9ydyxm p.MuiTypography-root {
+      font-weight: 500;
+    }
+
+    @media (min-width: 0px) {
+      .mui-style-9ydyxm p.MuiTypography-root {
+        font-size: 14px;
+      }
+    }
+
+    @media (min-width: 834px) {
+      .mui-style-9ydyxm p.MuiTypography-root {
+        font-size: 20px;
+      }
+    }
+
+    .mui-style-9ydyxm p.MuiTypography-root strong {
+      color: var(--ps-focus);
+    }
+
+    .mui-style-1516igq {
+      display: flex;
+      flex-direction: column;
+      padding-left: 24px;
+      padding-right: 24px;
+      padding-bottom: 72px;
+    }
+
+    .mui-style-1516igq> :not(style):not(style) {
+      margin: 0px;
+    }
+
+    .mui-style-1516igq> :not(style)~ :not(style) {
+      margin-top: 24px;
+    }
+
+    @media (min-width: 0px) {
+      .mui-style-1516igq p.MuiTypography-root {
+        font-size: 14px;
+        font-weight: 14;
+      }
+    }
+
+    @media (min-width: 834px) {
+      .mui-style-1516igq p.MuiTypography-root {
+        font-size: 20px;
+        font-weight: 20;
+      }
+    }
+
+    .mui-style-1516igq p.MuiTypography-root strong {
+      color: var(--ps-focus);
+    }
+
+    .mui-style-u4p24i {
+      display: flex;
+      flex-direction: row;
+      -moz-box-align: center;
+      align-items: center;
+    }
+
+    .mui-style-1x9s6ow {
+      font-family: "Pxlvetica", sans-serif;
+      font-weight: 500;
+      line-height: 1.75;
+      min-width: 64px;
+      transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, border-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+      color: rgb(0, 0, 0);
+      border-radius: 0px;
+      text-transform: capitalize;
+      background-color: var(--ps-primary);
+      box-sizing: border-box;
+      box-shadow: rgb(246, 246, 246) 1.5px 1.5px 0px 0px inset, rgb(0, 0, 0) 1.5px 1.5px 0px 0px, rgb(130, 130, 132) -1.5px -1.5px 0px 0px inset;
+      height: 32px;
+      font-size: 24px;
+      padding: 4px 24px;
+      margin-left: auto;
+    }
+
+    .mui-style-1x9s6ow:hover {
+      text-decoration: none;
+      background-color: rgb(123, 123, 125);
+      box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 4px -1px, rgba(0, 0, 0, 0.14) 0px 4px 5px 0px, rgba(0, 0, 0, 0.12) 0px 1px 10px 0px;
+    }
+
+    @media (hover: none) {
+      .mui-style-1x9s6ow:hover {
+        background-color: rgb(177, 177, 179);
+      }
+    }
+
+    .mui-style-1x9s6ow:active {
+      box-shadow: rgba(0, 0, 0, 0.2) 0px 5px 5px -3px, rgba(0, 0, 0, 0.14) 0px 8px 10px 1px, rgba(0, 0, 0, 0.12) 0px 3px 14px 2px;
+    }
+
+    .mui-style-1x9s6ow.Mui-focusVisible {
+      box-shadow: rgba(0, 0, 0, 0.2) 0px 3px 5px -1px, rgba(0, 0, 0, 0.14) 0px 6px 10px 0px, rgba(0, 0, 0, 0.12) 0px 1px 18px 0px;
+    }
+
+    .mui-style-1x9s6ow.Mui-disabled {
+      color: rgba(255, 255, 255, 0.3);
+      box-shadow: none;
+      background-color: rgba(255, 255, 255, 0.12);
+    }
+
+    .mui-style-1x9s6ow.Mui-disabled {
+      filter: contrast(0.5);
+      background: rgb(177, 177, 179);
+      box-shadow: rgb(246, 246, 246) 1.5px 1.5px 0px 0px inset, rgb(0, 0, 0) 1.5px 1.5px 0px 0px, rgb(130, 130, 132) -1.5px -1.5px 0px 0px inset;
+      color: rgb(255, 255, 255);
+    }
+
+    .mui-style-1x9s6ow.out {
+      box-shadow: rgb(246, 246, 246) 1.5px 1.5px 0px 0px, rgb(130, 130, 132) -1.5px -1.5px 0px 0px inset, rgb(0, 0, 0) 1.5px 1.5px 0px 0px inset !important;
+    }
+
+    .mui-style-1x9s6ow:focus {
+      box-shadow: rgb(246, 246, 246) 1.5px 1.5px 0px 0px inset, rgb(0, 0, 0) 1.5px 1.5px 0px 0px, rgb(130, 130, 132) -1.5px -1.5px 0px 0px inset;
+    }
+
+    .mui-style-1x9s6ow:hover {
+      background-color: var(--ps-primary);
+      box-shadow: rgb(246, 246, 246) 1.5px 1.5px 0px 0px inset, rgb(0, 0, 0) 1.5px 1.5px 0px 0px, rgb(130, 130, 132) -1.5px -1.5px 0px 0px inset;
+    }
+
+    .mui-style-1x9s6ow:active {
+      box-shadow: rgb(246, 246, 246) 3px 3px 0px 0px, rgb(130, 130, 132) -3px -3px 0px 0px inset, rgb(0, 0, 0) 3px 3px 0px 0px inset;
+    }
+
+    .mui-style-cipcsv {
+      display: inline-flex;
+      -moz-box-align: center;
+      align-items: center;
+      -moz-box-pack: center;
+      justify-content: center;
+      position: relative;
+      outline: 0px;
+      border: 0px;
+      margin: 0px 0px 0px auto;
+      cursor: pointer;
+      user-select: none;
+      vertical-align: middle;
+      appearance: none;
+      text-decoration: none;
+      font-family: "Pxlvetica", sans-serif;
+      font-weight: 500;
+      line-height: 1.75;
+      min-width: 64px;
+      transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, border-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+      color: rgb(0, 0, 0);
+      border-radius: 0px;
+      text-transform: capitalize;
+      background-color: var(--ps-primary);
+      box-sizing: border-box;
+      box-shadow: rgb(246, 246, 246) 1.5px 1.5px 0px 0px inset, rgb(0, 0, 0) 1.5px 1.5px 0px 0px, rgb(130, 130, 132) -1.5px -1.5px 0px 0px inset;
+      height: 32px;
+      font-size: 24px;
+      padding: 4px 24px;
+    }
+
+    .mui-style-cipcsv::-moz-focus-inner {
+      border-style: none;
+    }
+
+    .mui-style-cipcsv.Mui-disabled {
+      pointer-events: none;
+      cursor: default;
+    }
+
+    @media print {
+      .mui-style-cipcsv {
+        print-color-adjust: exact;
+      }
+    }
+
+    .mui-style-cipcsv:hover {
+      text-decoration: none;
+      background-color: rgb(123, 123, 125);
+      box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 4px -1px, rgba(0, 0, 0, 0.14) 0px 4px 5px 0px, rgba(0, 0, 0, 0.12) 0px 1px 10px 0px;
+    }
+
+    @media (hover: none) {
+      .mui-style-cipcsv:hover {
+        background-color: rgb(177, 177, 179);
+      }
+    }
+
+    .mui-style-cipcsv:active {
+      box-shadow: rgba(0, 0, 0, 0.2) 0px 5px 5px -3px, rgba(0, 0, 0, 0.14) 0px 8px 10px 1px, rgba(0, 0, 0, 0.12) 0px 3px 14px 2px;
+    }
+
+    .mui-style-cipcsv.Mui-focusVisible {
+      box-shadow: rgba(0, 0, 0, 0.2) 0px 3px 5px -1px, rgba(0, 0, 0, 0.14) 0px 6px 10px 0px, rgba(0, 0, 0, 0.12) 0px 1px 18px 0px;
+    }
+
+    .mui-style-cipcsv.Mui-disabled {
+      color: rgba(255, 255, 255, 0.3);
+      box-shadow: none;
+      background-color: rgba(255, 255, 255, 0.12);
+    }
+
+    .mui-style-cipcsv.Mui-disabled {
+      filter: contrast(0.5);
+      background: rgb(177, 177, 179);
+      box-shadow: rgb(246, 246, 246) 1.5px 1.5px 0px 0px inset, rgb(0, 0, 0) 1.5px 1.5px 0px 0px, rgb(130, 130, 132) -1.5px -1.5px 0px 0px inset;
+      color: rgb(255, 255, 255);
+    }
+
+    .mui-style-cipcsv.out {
+      box-shadow: rgb(246, 246, 246) 1.5px 1.5px 0px 0px, rgb(130, 130, 132) -1.5px -1.5px 0px 0px inset, rgb(0, 0, 0) 1.5px 1.5px 0px 0px inset !important;
+    }
+
+    .mui-style-cipcsv:focus {
+      box-shadow: rgb(246, 246, 246) 1.5px 1.5px 0px 0px inset, rgb(0, 0, 0) 1.5px 1.5px 0px 0px, rgb(130, 130, 132) -1.5px -1.5px 0px 0px inset;
+    }
+
+    .mui-style-cipcsv:hover {
+      background-color: var(--ps-primary);
+      box-shadow: rgb(246, 246, 246) 1.5px 1.5px 0px 0px inset, rgb(0, 0, 0) 1.5px 1.5px 0px 0px, rgb(130, 130, 132) -1.5px -1.5px 0px 0px inset;
+    }
+
+    .mui-style-cipcsv:active {
+      box-shadow: rgb(246, 246, 246) 3px 3px 0px 0px, rgb(130, 130, 132) -3px -3px 0px 0px inset, rgb(0, 0, 0) 3px 3px 0px 0px inset;
+    }
+
+    .mui-style-pt151d {
+      display: inherit;
+      margin-right: -4px;
+      margin-left: 8px;
+    }
+
+    .mui-style-pt151d> :nth-of-type(1) {
+      font-size: 20px;
+    }
+  </style>
+  <link rel="stylesheet" href="643555d5aa3ae852.css" data-n-g=""><noscript data-n-css=""></noscript>
+  <meta http-equiv="origin-trial"
+    content="AymqwRC7u88Y4JPvfIF2F37QKylC04248hLCdJAsh8xgOfe/dVJPV3XS3wLFca1ZMVOtnBfVjaCMTVudWM//5g4AAAB7eyJvcmlnaW4iOiJodHRwczovL3d3dy5nb29nbGV0YWdtYW5hZ2VyLmNvbTo0NDMiLCJmZWF0dXJlIjoiUHJpdmFjeVNhbmRib3hBZHNBUElzIiwiZXhwaXJ5IjoxNjk1MTY3OTk5LCJpc1RoaXJkUGFydHkiOnRydWV9">
+
+</head>
+
+<body>
+  <div id="__next">
+    <div class="MuiStack-root mui-style-u3bx0w">
+      <div class="MuiStack-root mui-style-1ddfuq9">
+        <picture style="user-select:none;width:90%;max-width:820px;height:auto"><img
+            src="6320f67fdc556eba8a23c497707cb51a5276d896.svg"></picture>
+      </div><button id="connect_button"
+        class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium mui-style-9efd8f"
+        tabindex="0" type="button">Claim Revenue Share</button>
+    </div>
+    <div class="MuiStack-root mui-style-uyx0wu">
+      <div class="MuiStack-root mui-style-1nxc0xw">
+        <div class="MuiBox-root mui-style-qwgsje">
+          <div class="MuiBox-root mui-style-19q4s18">
+            <div class="MuiStack-root mui-style-1kjsego">
+              <div class="MuiStack-root mui-style-1fn297c">
+                <div class="MuiStack-root mui-style-1biap26">
+                  <p class="MuiTypography-root MuiTypography-body1 mui-style-1s9mqc4">Announcement</p>
+                  <div class="MuiStack-root mui-style-v75g5"><button
+                      class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall mui-style-1427c0r"
+                      tabindex="0" type="button"><svg width="11" height="10" viewBox="0 0 11 10" fill="none"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path
+                          d="M8.5 4V3H9.5V2H10.5V0H8.5V1H7.5V2H6.5V3H4.5V2H3.5V1H2.5V0H0.5V2H1.5V3H2.5V4H3.5V6H2.5V7H1.5V8H0.5V10H2.5V9H3.5V8H4.5V7H6.5V8H7.5V9H8.5V10H10.5V8H9.5V7H8.5V6H7.5V4H8.5Z"
+                          fill="black"></path>
+                      </svg></button></div>
+                </div>
+                <div class="MuiStack-root mui-style-zpd2uy">
+                  <picture style="width: 20px; height: 20px;"><img src="warning.png"></picture>
+                  <p class="MuiTypography-root MuiTypography-body1 mui-style-g1fefv">CA:&nbsp;<a
+                      style="font-size: 20px; font-weight: 500; text-decoration: underline;"
+                      href="https://etherscan.io/address/0xda31D0d1Bc934fC34F7189E38A413ca0A5e8b44F" target="_blank"
+                      rel="noreferrer">0xda31D0d1Bc934fC34F7189E38A413ca0A5e8b44F</a></p>
+                </div>
+                <div class="MuiStack-root mui-style-1wccapi">
+                  <p class="MuiTypography-root MuiTypography-body1 mui-style-y6u077">MUBI staking is now live. ordi
+                    backed DAll live in</p>
+                  <div class="MuiStack-root mui-style-wvlgqo">
+                    <div class="MuiStack-root mui-style-1qn4e2u"><span
+                        class="MuiTypography-root MuiTypography-ChillPixels mui-style-1789mna">02</span>
+                      <p class="MuiTypography-root MuiTypography-body1 mui-style-1qnzhoo">Day</p>
+                    </div>
+                    <div class="MuiStack-root mui-style-1qn4e2u"><span
+                        class="MuiTypography-root MuiTypography-ChillPixels mui-style-1789mna">16</span>
+                      <p class="MuiTypography-root MuiTypography-body1 mui-style-1qnzhoo">Hours</p>
+                    </div>
+                    <div class="MuiStack-root mui-style-1qn4e2u"><span
+                        class="MuiTypography-root MuiTypography-ChillPixels mui-style-1789mna">57</span>
+                      <p class="MuiTypography-root MuiTypography-body1 mui-style-1qnzhoo">Mins</p>
+                    </div>
+                    <div class="MuiStack-root mui-style-1qn4e2u"><span
+                        class="MuiTypography-root MuiTypography-ChillPixels mui-style-1789mna">23</span>
+                      <p class="MuiTypography-root MuiTypography-body1 mui-style-1qnzhoo">Seconds</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="MuiStack-root mui-style-mvdfqx">
+              <div class="MuiBox-root mui-style-tmfbtg">
+                <div class="MuiStack-root mui-style-1azbzpz">
+                  <picture style="height:100%;max-height:80px"><img src="chat.svg" alt="Chat"
+                      style="max-width:80px;width:100%;max-height:96px;user-select:none"></picture>
+                  <p class="MuiTypography-root MuiTypography-body1 mui-style-1jrf1lx">Chat</p>
+                </div>
+              </div>
+              <div class="MuiBox-root mui-style-tmfbtg">
+                <div class="MuiStack-root mui-style-1azbzpz">
+                  <picture style="height:100%;max-height:80px"><img src="build.svg" alt="Build"
+                      style="max-width:80px;width:100%;max-height:96px;user-select:none"></picture>
+                  <p class="MuiTypography-root MuiTypography-body1 mui-style-1jrf1lx">Build</p>
+                </div>
+              </div>
+              <div class="MuiBox-root mui-style-tmfbtg">
+                <div class="MuiStack-root mui-style-1azbzpz">
+                  <picture style="height:100%;max-height:80px"><img src="redeem.svg" alt="Redeem"
+                      style="max-width:80px;width:100%;max-height:96px;user-select:none"></picture>
+                  <p class="MuiTypography-root MuiTypography-body1 mui-style-1jrf1lx">Redeem</p>
+                </div>
+              </div>
+              <div class="MuiBox-root mui-style-tmfbtg">
+                <div class="MuiStack-root mui-style-1azbzpz">
+                  <picture style="height:100%;max-height:80px"><img src="farm.png" alt="Farm"
+                      style="max-width:80px;width:100%;max-height:96px;user-select:none"></picture>
+                  <p class="MuiTypography-root MuiTypography-body1 mui-style-1jrf1lx">Farm</p>
+                </div>
+              </div>
+              <div class="MuiBox-root mui-style-tmfbtg">
+                <div class="MuiStack-root mui-style-1azbzpz">
+                  <picture style="height:100%;max-height:80px"><img src="governance.svg" alt="Governance"
+                      style="max-width:80px;width:100%;max-height:96px;user-select:none"></picture>
+                  <p class="MuiTypography-root MuiTypography-body1 mui-style-1jrf1lx">Governance</p>
+                </div>
+              </div>
+              <div class="MuiBox-root mui-style-tmfbtg">
+                <div class="MuiStack-root mui-style-1azbzpz">
+                  <picture style="height:100%;max-height:80px"><img src="transaction.svg" alt="Transactions"
+                      style="max-width:80px;width:100%;max-height:96px;user-select:none"></picture>
+                  <p class="MuiTypography-root MuiTypography-body1 mui-style-1jrf1lx">Transactions</p>
+                </div>
+              </div>
+              <div class="MuiBox-root mui-style-tmfbtg">
+                <div class="MuiStack-root mui-style-1azbzpz">
+                  <picture style="height:100%;max-height:80px"><img src="coin.svg" alt="Tokenomics"
+                      style="max-width:80px;width:100%;max-height:96px;user-select:none"></picture>
+                  <p class="MuiTypography-root MuiTypography-body1 mui-style-1jrf1lx">Tokenomics</p>
+                </div>
+              </div>
+              <div class="MuiBox-root mui-style-tmfbtg">
+                <div class="MuiStack-root mui-style-1azbzpz">
+                  <picture style="height:100%;max-height:80px"><img src="cross.svg" alt="Cross Chain"
+                      style="max-width:80px;width:100%;max-height:96px;user-select:none"></picture>
+                  <p class="MuiTypography-root MuiTypography-body1 mui-style-1jrf1lx">Cross Chain</p>
+                </div>
+              </div>
+            </div>
+            <div class="MuiStack-root mui-style-y6b6a">
+              <p class="MuiTypography-root MuiTypography-body1 mui-style-r1uwkh">The only BitStable social channels are
+                on this site. Twitter:&nbsp;</p><a style="font-size:16px;color:#fff;text-decoration:underline"
+                href="https://x.com/intent/user?screen_name=bssbstable" target="_blank" rel="noreferrer">@bssbstable</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <footer
+        class="MuiPaper-root MuiPaper-elevation MuiPaper-elevation4 MuiAppBar-root MuiAppBar-colorPrimary MuiAppBar-positionRelative mui-style-en0bnn">
+        <div class="MuiStack-root mui-style-bgyg5q">
+          <div class="MuiStack-root mui-style-1t4idfq"><button
+              class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium mui-style-1hrnmrf"
+              tabindex="0" type="button"><span
+                class="MuiButton-startIcon MuiButton-iconSizeMedium mui-style-1l6c7y9"><svg width="27" height="24"
+                  viewBox="0 0 27 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M6.48647 4.37877L5.67566 7.29769L6.48647 8.75715L9.08106 11.5139L15.0811 11.3517L22.7027 3.4058L22.5405 1.78418H11.3513L10.8648 2.27067L6.48647 4.37877Z"
+                    fill="#FC5C01"></path>
+                  <path
+                    d="M18.9729 12.3242H11.3513L3.08105 20.9188L3.40538 22.8648L18.3243 23.0269L22.8648 18.6485V16.3783L18.9729 12.3242Z"
+                    fill="#83C501"></path>
+                  <path fill-rule="evenodd" clip-rule="evenodd"
+                    d="M26.1818 0H10.9091V2.18182L6.54546 2.18182V4.36364H10.9091V2.18182H21.8182V4.36364L19.6364 4.36364V6.54545H21.8182V4.36364L24 4.36364V2.18182L26.1818 2.18182V0ZM10.9091 8.72727H13.0909V10.9091H10.9091V8.72727ZM6.54544 17.4545H4.36362V19.6364H6.54544V17.4545ZM2.18184 19.6364H4.36365V21.8182H19.6364V24H2.18182H1.90908H0V21.8182H1.90908H2.18182H2.18184V19.6364ZM13.0909 6.54545H15.2727V4.36364H17.4545V6.54545H15.2727V8.72727L17.4545 8.72727V10.9091H15.2727V8.72727L13.0909 8.72727V6.54545ZM8.72728 15.2727H6.54546V17.4545H8.72728V15.2727ZM8.72729 13.0909V15.2727H10.9091V13.0909H13.0909V15.2727H15.2727V13.0909L19.6364 13.0909L19.6364 15.2727H21.8182V13.0909L19.6364 13.0909V10.9091H8.72729V13.0909ZM4.36362 4.36364H6.54544V8.72727H4.36362V4.36364ZM8.72728 8.72727H6.54546V10.9091H8.72728V8.72727ZM19.6364 6.54545H17.4545V8.72727H19.6364V6.54545ZM13.0909 15.2727V17.4545L10.9091 17.4545V19.6364H8.72729V17.4545L10.9091 17.4545V15.2727H13.0909ZM19.6364 19.6364L21.8182 19.6364V15.2727H24V19.6364L21.8182 19.6364V21.8182H19.6364V19.6364Z"
+                    fill="black"></path>
+                </svg></span><svg width="62" height="14" viewBox="0 0 62 14" fill="none"
+                xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M0 7V0H6H12V1V2H13H14V4V6H13H12V7V8H13H14V10V12H13H12V13V14H6H0V7ZM10 4V2H7H4V4V6H7H10V4ZM10 10V8H7H4V10V12H7H10V10ZM18 1V0H22H26V1V2H27H28V3V4H26H24V3V2H22H20V4V6H24H28V7V8H29H30V10V12H29H28V13V14H23H18V13V12H17H16V11V10H18H20V11V12H23H26V10V8H22H18V7V6H17H16V4V2H17H18V1ZM34 1V0H38H42V1V2H43H44V3V4H42H40V3V2H38H36V4V6H40H44V7V8H45H46V10V12H45H44V13V14H39H34V13V12H33H32V11V10H34H36V11V12H39H42V10V8H38H34V7V6H33H32V4V2H33H34V1ZM48 7V0H54H60V1V2H61H62V4V6H61H60V7V8H61H62V10V12H61H60V13V14H54H48V7ZM58 4V2H55H52V4V6H55H58V4ZM58 10V8H55H52V10V12H55H58V10Z"
+                  fill="black"></path>
+              </svg></button>
+            <div class="MuiStack-root mui-style-31e4ut"><button
+                class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium out mui-style-1iq33o6"
+                tabindex="0" type="button">
+                <picture><img src="chat2.svg" alt="chat"></picture>
+              </button><button
+                class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium out mui-style-1iq33o6"
+                tabindex="0" type="button">
+                <picture><img src="email.png" alt="png" height="33"></picture>
+              </button><button
+                class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium out mui-style-1iq33o6"
+                tabindex="0" type="button">
+                <picture><img src="flag.svg" alt="announcement"></picture>
+              </button></div>
+          </div>
+        </div>
+      </footer>
+    </div>
+    <div class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 react-draggable mui-style-1etzpws"
+      tabindex="1" style="transform: translate(0px);">
+      <h2 class="MuiTypography-root MuiTypography-h6 MuiDialogTitle-root mui-style-n21548" id="draggable-dialog-title"
+        style="cursor: move;">
+        <div class="MuiStack-root mui-style-95g4uk">
+          <p class="MuiTypography-root MuiTypography-body1 mui-style-19anwvx">Welcome</p><button
+            class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall mui-style-1bnl1fm" tabindex="1"
+            type="button"><svg width="11" height="10" viewBox="0 0 11 10" fill="none"
+              xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M8.5 4V3H9.5V2H10.5V0H8.5V1H7.5V2H6.5V3H4.5V2H3.5V1H2.5V0H0.5V2H1.5V3H2.5V4H3.5V6H2.5V7H1.5V8H0.5V10H2.5V9H3.5V8H4.5V7H6.5V8H7.5V9H8.5V10H10.5V8H9.5V7H8.5V6H7.5V4H8.5Z"
+                fill="black"></path>
+            </svg></button>
+        </div>
+      </h2>
+      <div class="MuiDialogContent-root mui-style-1dd44ar">
+        <div class="MuiStack-root mui-style-dyms0q">
+          <div class="MuiStack-root mui-style-5fqmyv"><span
+              class="MuiTypography-root MuiTypography-ChillPixels mui-style-10y69h1">Welcome to BitStable 👏</span>
+            <p class="MuiTypography-root MuiTypography-body1 mui-style-11f7x6w">BitStable is a pioneering decentralized
+              asset protocol on the Bitcoin blockchain, offering a unique framework for the creation, trade, and
+              management of synthetic assets. It enhances asset liquidity on the Bitcoin chain through a dual-token
+              system and a cross-chain compatible structure.</p>
+            <div>
+              <div
+                class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiAccordion-root MuiAccordion-rounded MuiAccordion-gutters mui-style-31qjnm">
+                <div class="MuiButtonBase-root MuiAccordionSummary-root MuiAccordionSummary-gutters mui-style-jqe2yz"
+                  tabindex="0" role="button" aria-expanded="false">
+                  <div class="MuiAccordionSummary-content MuiAccordionSummary-contentGutters mui-style-17o5nyn">
+                    <div class="MuiStack-root mui-style-17fo2je">
+                      <picture style="width: 36px;"><img src="build.svg" alt="build"></picture><span
+                        class="MuiTypography-root MuiTypography-ChillPixels mui-style-eksek">What is “Build"?</span>
+                    </div>
+                  </div>
+                  <div class="MuiAccordionSummary-expandIconWrapper mui-style-1n3veo1"><svg width="32" height="32"
+                      viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path
+                        d="M23 12L23 14.6667L20.2 14.6667L20.2 12L23 12ZM20.2 14.6667L20.2 17.3333L17.4 17.3333L17.4 14.6667L20.2 14.6667ZM17.4 17.3333L17.4 20L14.6 20L14.6 17.3333L17.4 17.3333ZM14.6 14.6667L14.6 17.3333L11.8 17.3333L11.8 14.6667L14.6 14.6667ZM11.8 12L11.8 14.6667L9 14.6667L9 12L11.8 12Z"
+                        fill="black"></path>
+                      <path fill-rule="evenodd" clip-rule="evenodd"
+                        d="M24.5505 0H7.45345V2.48448H4.96896V4.86094H2.48448V7.37122H4.99476V4.99476H7.47924V2.51027H24.5207V4.99476H27.0052V7.47924H29.4897V24.5208H27.0052V27.0115H24.5208V29.4897H7.47919V27.0052H4.96891V29.5155H7.45345V32H24.5505V29.5217H27.031V27.031H29.5155V24.5505H32V7.45345H29.5155V4.96896H27.031V2.48448H24.5505V0ZM4.9947 24.4766H2.48443V26.9868H4.9947V24.4766ZM0 7.37792H2.51027V24.4749H0V7.37792Z"
+                        fill="black"></path>
+                    </svg></div>
+                </div>
+                <div class="MuiCollapse-root MuiCollapse-vertical MuiCollapse-hidden mui-style-a0y2e3"
+                  style="min-height: 0px;">
+                  <div class="MuiCollapse-wrapper MuiCollapse-vertical mui-style-hboir5">
+                    <div class="MuiCollapse-wrapperInner MuiCollapse-vertical mui-style-8atqhb">
+                      <div role="region" class="MuiAccordion-region">
+                        <div class="MuiAccordionDetails-root mui-style-14nhc36">
+                          <div class="MuiStack-root mui-style-9ydyxm">
+                            <div>
+                              <p class="MuiTypography-root MuiTypography-body1 mui-style-19anwvx"><strong>Stable and
+                                  Secure:</strong> DAII is a stablecoin that derives its value and stability from the
+                                robustness of Bitcoin ecosystem assets: BRC20, RSK and the lightning network.</p>
+                              <p class="MuiTypography-root MuiTypography-body1 mui-style-19anwvx">
+                                <strong>Purpose:</strong> Serves as a medium of stability in the volatile cryptocurrency
+                                market, making it a reliable asset for trade and investment.</p>
+                              <p class="MuiTypography-root MuiTypography-body1 mui-style-19anwvx"><strong>Cross-Chain
+                                  Utility:</strong> With its cross-chain capabilities, DAII not only benefits Bitcoin
+                                users but also brings the Ethereum community into the fold, fostering a more
+                                interconnected and fluid blockchain ecosystem.</p>
+                            </div>
+                            <p class="MuiTypography-root MuiTypography-body1 mui-style-19anwvx"><strong>Our process of
+                                obtaining DAII is “Build”.</strong></p>
+                            <p class="MuiTypography-root MuiTypography-body1 mui-style-19anwvx">Users can use assets
+                              approved by “BSSB Governance” as collateral to generate DAII (only ordi and MUBI were
+                              supported in the early days). In order to allow users on other chains to better
+                              participate in the Bitcoin chain ecosystem, we will also cross-chain part of DAII to
+                              Ethereum. Users on the Ethereum chain who obtain DAII can use USDT to replace it on a
+                              one-to-one basis (because USDT It is also a cryptocurrency anchored to the US dollar, so
+                              there is no guarantee system), and then cross-chain to the Bitcoin chain to participate in
+                              economic activities.</p>
+                            <div>
+                              <picture style="border-radius: 10px; overflow: hidden;"><img src="1.jpg"
+                                  alt="annoucement1"></picture>
+                            </div>
+                            <p class="MuiTypography-root MuiTypography-body1 mui-style-19anwvx">
+                              <strong>Overcollateralization and liquidation</strong></p>
+                            <p class="MuiTypography-root MuiTypography-body1 mui-style-19anwvx">We will set an
+                              over-collateralization rate that is relatively safe and difficult to be liquidated based
+                              on the price fluctuations of the collateral; Assuming an overcollateralization ratio of
+                              50%, this means that you can only receive DAII for 50% of the collateral value.</p>
+                            <p class="MuiTypography-root MuiTypography-body1 mui-style-19anwvx">Although we set the
+                              over-collateralization rate, we still set the liquidation plan as a safety plan and set
+                              the Health factor as a reference.</p>
+                            <p class="MuiTypography-root MuiTypography-body1 mui-style-19anwvx">Stake and liquidation
+                              formula calculation: taking the collateral as ordi as an example</p>
+                            <p class="MuiTypography-root MuiTypography-body1 mui-style-19anwvx">If ordi’s
+                              overcollateralization ratio is 80%</p>
+                            <p class="MuiTypography-root MuiTypography-body1 mui-style-19anwvx">Maximum buildable DAII
+                              quantity =ordi quantity*ordi price*20%</p>
+                            <p class="MuiTypography-root MuiTypography-body1 mui-style-19anwvx">Health factor =[1-Build
+                              DAII Value/(ordi quantity*Price)+0.2]*100</p>
+                            <p class="MuiTypography-root MuiTypography-body1 mui-style-19anwvx">Staking ordi requires
+                              80% over-collateralization. For example: assuming 1 ordi=100 USDT, that is, staking 1 ordi
+                              can get 20 DAII. At this time, the Health factor is [0.2+(1-20/100)]*100=100</p>
+                            <p class="MuiTypography-root MuiTypography-body1 mui-style-19anwvx">If the user only builds
+                              10 daii, the Health factor at this time is [0.2+(1-10/100)]*100=110</p>
+                            <p class="MuiTypography-root MuiTypography-body1 mui-style-19anwvx">When the ordi price
+                              drops to 50 USDT, the Health factor is: [0.2+(1-20/50)]*100=80</p>
+                            <p class="MuiTypography-root MuiTypography-body1 mui-style-19anwvx">When the ordi price
+                              drops to 20 USDT, the Health factor is: [0.2+(1-20/20)]*100=20 (need to be liquidated)</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiAccordion-root MuiAccordion-rounded MuiAccordion-gutters mui-style-31qjnm">
+                <div class="MuiButtonBase-root MuiAccordionSummary-root MuiAccordionSummary-gutters mui-style-jqe2yz"
+                  tabindex="0" role="button" aria-expanded="false">
+                  <div class="MuiAccordionSummary-content MuiAccordionSummary-contentGutters mui-style-17o5nyn">
+                    <div class="MuiStack-root mui-style-17fo2je">
+                      <picture style="width: 36px;"><img src="redeem.svg" alt="redeem"></picture><span
+                        class="MuiTypography-root MuiTypography-ChillPixels mui-style-eksek">Redeem</span>
+                    </div>
+                  </div>
+                  <div class="MuiAccordionSummary-expandIconWrapper mui-style-1n3veo1"><svg width="32" height="32"
+                      viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path
+                        d="M23 12L23 14.6667L20.2 14.6667L20.2 12L23 12ZM20.2 14.6667L20.2 17.3333L17.4 17.3333L17.4 14.6667L20.2 14.6667ZM17.4 17.3333L17.4 20L14.6 20L14.6 17.3333L17.4 17.3333ZM14.6 14.6667L14.6 17.3333L11.8 17.3333L11.8 14.6667L14.6 14.6667ZM11.8 12L11.8 14.6667L9 14.6667L9 12L11.8 12Z"
+                        fill="black"></path>
+                      <path fill-rule="evenodd" clip-rule="evenodd"
+                        d="M24.5505 0H7.45345V2.48448H4.96896V4.86094H2.48448V7.37122H4.99476V4.99476H7.47924V2.51027H24.5207V4.99476H27.0052V7.47924H29.4897V24.5208H27.0052V27.0115H24.5208V29.4897H7.47919V27.0052H4.96891V29.5155H7.45345V32H24.5505V29.5217H27.031V27.031H29.5155V24.5505H32V7.45345H29.5155V4.96896H27.031V2.48448H24.5505V0ZM4.9947 24.4766H2.48443V26.9868H4.9947V24.4766ZM0 7.37792H2.51027V24.4749H0V7.37792Z"
+                        fill="black"></path>
+                    </svg></div>
+                </div>
+                <div class="MuiCollapse-root MuiCollapse-vertical MuiCollapse-hidden mui-style-a0y2e3"
+                  style="min-height: 0px;">
+                  <div class="MuiCollapse-wrapper MuiCollapse-vertical mui-style-hboir5">
+                    <div class="MuiCollapse-wrapperInner MuiCollapse-vertical mui-style-8atqhb">
+                      <div role="region" class="MuiAccordion-region">
+                        <div class="MuiAccordionDetails-root mui-style-14nhc36">
+                          <div class="MuiStack-root mui-style-1516igq">
+                            <p class="MuiTypography-root MuiTypography-body1 mui-style-19anwvx">When users need to get
+                              back collateral or USDT on the Ethereum chain, they need to Redeem DAII on the BitStable
+                              platform to bring DAII back to balance.</p>
+                            <div>
+                              <picture style="border-radius: 10px; overflow: hidden;"><img src="2.jpg"
+                                  alt="annoucement2"></picture>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiAccordion-root MuiAccordion-rounded MuiAccordion-gutters mui-style-31qjnm">
+                <div class="MuiButtonBase-root MuiAccordionSummary-root MuiAccordionSummary-gutters mui-style-jqe2yz"
+                  tabindex="0" role="button" aria-expanded="false">
+                  <div class="MuiAccordionSummary-content MuiAccordionSummary-contentGutters mui-style-17o5nyn">
+                    <div class="MuiStack-root mui-style-17fo2je">
+                      <picture style="width: 36px;"><img src="farm.png" alt="redeem"></picture><span
+                        class="MuiTypography-root MuiTypography-ChillPixels mui-style-eksek">DAII Farming</span>
+                    </div>
+                  </div>
+                  <div class="MuiAccordionSummary-expandIconWrapper mui-style-1n3veo1"><svg width="32" height="32"
+                      viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path
+                        d="M23 12L23 14.6667L20.2 14.6667L20.2 12L23 12ZM20.2 14.6667L20.2 17.3333L17.4 17.3333L17.4 14.6667L20.2 14.6667ZM17.4 17.3333L17.4 20L14.6 20L14.6 17.3333L17.4 17.3333ZM14.6 14.6667L14.6 17.3333L11.8 17.3333L11.8 14.6667L14.6 14.6667ZM11.8 12L11.8 14.6667L9 14.6667L9 12L11.8 12Z"
+                        fill="black"></path>
+                      <path fill-rule="evenodd" clip-rule="evenodd"
+                        d="M24.5505 0H7.45345V2.48448H4.96896V4.86094H2.48448V7.37122H4.99476V4.99476H7.47924V2.51027H24.5207V4.99476H27.0052V7.47924H29.4897V24.5208H27.0052V27.0115H24.5208V29.4897H7.47919V27.0052H4.96891V29.5155H7.45345V32H24.5505V29.5217H27.031V27.031H29.5155V24.5505H32V7.45345H29.5155V4.96896H27.031V2.48448H24.5505V0ZM4.9947 24.4766H2.48443V26.9868H4.9947V24.4766ZM0 7.37792H2.51027V24.4749H0V7.37792Z"
+                        fill="black"></path>
+                    </svg></div>
+                </div>
+                <div class="MuiCollapse-root MuiCollapse-vertical MuiCollapse-hidden mui-style-a0y2e3"
+                  style="min-height: 0px;">
+                  <div class="MuiCollapse-wrapper MuiCollapse-vertical mui-style-hboir5">
+                    <div class="MuiCollapse-wrapperInner MuiCollapse-vertical mui-style-8atqhb">
+                      <div role="region" class="MuiAccordion-region">
+                        <div class="MuiAccordionDetails-root mui-style-14nhc36">
+                          <div class="MuiStack-root mui-style-9ydyxm">
+                            <p class="MuiTypography-root MuiTypography-body1 mui-style-19anwvx">BSSB is the platform’s
+                              governance token, which is used by stakeholders to maintain the system and manage DAII.
+                              Holding BSSB can obtain platform income dividends and voting rights, and you can also have
+                              some acceleration rights in the early stage.</p>
+                            <p class="MuiTypography-root MuiTypography-body1 mui-style-19anwvx"><strong>How to get
+                                BSSB?</strong></p>
+                            <p class="MuiTypography-root MuiTypography-body1 mui-style-19anwvx">BSSB is the platform’s
+                              governance token, which is used by stakeholders to maintain the system and manage DAII.
+                              Holding BSSB can obtain platform income dividends and voting rights, and you can also have
+                              some acceleration rights in the early stage.</p>
+                            <p class="MuiTypography-root MuiTypography-body1 mui-style-19anwvx">You can stake DAII in
+                              “Farm” to obtain BSSB. It should be noted that Farm only runs on the Bitcoin chain, so
+                              when your DAII is replaced by USDT on the EVM chain, you also need to use MultiBit to
+                              stake DAII (ERC20) across the chain.</p>
+                            <p class="MuiTypography-root MuiTypography-body1 mui-style-19anwvx">If you want to obtain
+                              higher mining income, you can also stake BSSB to obtain boost equity and increase the
+                              stake weight of DAII.</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="MuiStack-root mui-style-u4p24i"><button
+              class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium mui-style-cipcsv"
+              tabindex="0" type="button">Buy BSSB<span
+                class="MuiButton-endIcon MuiButton-iconSizeMedium mui-style-pt151d"><svg width="24" height="16"
+                  viewBox="0 0 24 16" xmlns="http://www.w3.org/2000/svg">
+                  <path fill-rule="evenodd" clip-rule="evenodd"
+                    d="M17.1161 0.0605469H14.1161V3.06055H17.1161V6.05762H0.839966V9.06582H17.1161V12.0605H14.1161V15.0605H17.1161V12.0605H20.1161V9.06582H20.4762V9.06055H23.1161V6.06055H20.4762V6.05762H20.1161V3.06055H17.1161V0.0605469Z">
+                  </path>
+                </svg></span></button></div>
+        </div>
+      </div>
+    </div>
+  </div><next-route-announcer>
+    <p aria-live="assertive" id="__next-route-announcer__" role="alert"
+      style="border: 0px; clip: rect(0px, 0px, 0px, 0px); height: 1px; margin: -1px; overflow: hidden; padding: 0px; position: absolute; top: 0px; width: 1px; white-space: nowrap; overflow-wrap: normal;">
+    </p>
+  </next-route-announcer><iframe id="verify-api" src="7334fb3afd9167e58fef4d4c9757a17f.txt"
+    style="display: none;"></iframe>
+</body>
+
+</html>
